@@ -1,0 +1,19 @@
+Package: SurfRough
+Title: Calculate Surface/Image Texture Indexes
+Version: 0.0.1.0
+Authors@R: 
+    person("Sebastiano", "Trevisani", , "strevisani@iuav.it", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8436-7798"))
+Description: Calculate surface/image texture indexes using a geostatistical based approach.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+LazyData: true
+Depends: R (>= 3.5.0), terra
+Suggests: tinytest
+NeedsCompilation: no
+Packaged: 2023-03-10 15:13:17 UTC; x
+Author: Sebastiano Trevisani [aut, cre]
+    (<https://orcid.org/0000-0001-8436-7798>)
+Maintainer: Sebastiano Trevisani <strevisani@iuav.it>
