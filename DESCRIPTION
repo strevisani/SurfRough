@@ -4,14 +4,17 @@ Version: 0.0.1.0
 Authors@R: 
     person("Sebastiano", "Trevisani", , "strevisani@iuav.it", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8436-7798"))
-Description: Calculate surface/image texture indexes using a geostatistical based approach.
+    person("Ilich", "Alexander", role = "ctb", comment = c(ORCID = "0000-0003-1758-8499"))
+Description: Calculate surface/image texture indexes using a geostatistical based approach (Trevisani et al. (2023) <doi:10.1016/j.geomorph.2023.108838>).
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+BugReports: https://github.com/strevisani/SurfRough/issues
 LazyData: true
 Depends: R (>= 3.5.0), terra
 Suggests: tinytest
+URL: https://github.com/strevisani/SurfRough, https://doi.org/10.5281/zenodo.7132160
 NeedsCompilation: no
 Packaged: 2023-03-10 15:13:17 UTC; x
 Author: Sebastiano Trevisani [aut, cre]

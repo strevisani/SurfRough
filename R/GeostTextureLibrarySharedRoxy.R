@@ -154,11 +154,6 @@ KernelRectangular=function(lenx,leny){
   return(kernel)
 }
 
-#for avoiding note messenging
-ignore_unused_imports <- function() {
-  terra::focal
-}
-
 #' Calculate the median of absolute values found in a search window for each raster in a list
 #'
 #' @param deltas A list of rasters with the values from which calculate the median of absolute values (e.g., directional differences of order K)
@@ -221,6 +216,7 @@ anisoDir=function(N,NE,E,SE){
 #' The input is represented by a list of rasters with the spatial variability index (e.g., MAD, variogram, etc.) computed
 #' in four directions (N-S, NE-SW, E-W, SE-NW)
 #' @param x A list of rasters with the spatial variability along 4 directions (see function anisoDir())
+#' @importFrom terra lapp
 #'
 #' @return A raster with the direction (in degrees, geographical) of maximum continuity
 #'
@@ -265,6 +261,7 @@ anisoR=function(N,NE,E,SE){
 #' The input is represented by a list of rasters with the spatial variability index (e.g., MAD, variogram, etc.) computed
 #' in four directions (N-S, NE-SW, E-W, SE-NW)
 #' @param x A list of rasters with the spatial variability along 4 directions (see function anisoR())
+#' @importFrom terra lapp
 #'
 #' @return A raster with the index of anisotropy (min=0 max=1)
 #'
@@ -299,6 +296,7 @@ anisoRL=function(x){
 #' @param w The moving window adopted for computing the geostatistical index (i.e., MAD)
 #'
 #' @return A list of 3 rasters: 1)isotropic roughness; 2) direction of anisotropy;3)index of anisotropy.
+#' @import terra
 #' @export
 #'
 #'
@@ -361,6 +359,7 @@ Madscan<-function(inRaster,kernels,w){
 #' @param deltas The values from which calculate the median of absolute values (i.e., directional differences of order K)
 #' @param w The moving window used (e.g. w=KernelCircular(3))
 #' @param exponent The exponent: increasing the exponent increase the sensitivity to outliers. Set 2 for Variogram and 1 for Madogram.
+#' @import terra
 #'
 #' @return A raster with the mean of absolute values in the search window
 #'
@@ -396,7 +395,8 @@ CalcMeans=function(deltas,w,exponent){
 #' @param kernels The kernels to be used for computing the directional differences (e.g. order 1 or 2 for various lags)
 #' @param w The moving window adopted for computing the geostatistical index (i.e., MAD)
 #' @param exponent The exponent: increasing the exponent increase the sensitivity to outliers. Set 2 for Variogram and 1 for Madogram.
-#' @return A list of 3 rasters: 1)isotropic roughness; 2) direction of anisotropy; 3)index of anisotropy.
+#' @return A SpatRaster with 3 layers: 1)isotropic roughness; 2) direction of anisotropy; 3)index of anisotropy.
+#' @import terra
 #' @export
 #'
 #'
@@ -456,7 +456,7 @@ Meanscan<-function(inRaster,kernels,w,exponent){
 #'
 #' @param inraster The DEM from which compute the index
 #' @param window The moving window adopted for computing the index
-#'
+#' @import terra
 #' @return The raster with the computed index
 #' @export
 #'
@@ -471,21 +471,17 @@ circularDispersionGV=function(inraster,window){
   #using the mean resultant length approach.
   #working with angles in the geographical convention
   #window-> the search window/kernel (e.g., window=KernelCircular(3))
-  slope=terrain(inraster,v="slope")
-  aspect=terrain(inraster,v="aspect")
-  #convert in radians!
-  rad<-function (degree) {
-    (degree * pi)/180
-  }
-  x=cos(rad(slope))*cos(rad(aspect))
-  y=cos(rad(slope))*sin(rad(aspect))
-  z=sin(rad(slope))
-  w=window
-  X=focal(x, w,fun=sum,expand=F,na.rm=F)
-  Y=focal(y, w,fun=sum,expand=F,na.rm=F)
-  Z=focal(z, w,fun=sum,expand=F,na.rm=F)
+  slope=terrain(inraster,v="slope", unit= "radians") #Use radians!
+  aspect=terrain(inraster,v="aspect", unit= "radians")
+  
+  x=cos(slope)*cos(aspect) 
+  y=cos(slope)*sin(aspect)
+  z=sin(slope)
+  X=focal(x, w=window,fun=sum,expand=F,na.rm=F)
+  Y=focal(y, w=window,fun=sum,expand=F,na.rm=F)
+  Z=focal(z, w=window,fun=sum,expand=F,na.rm=F)
   R=sqrt(X^2+Y^2+Z^2)
-  return(1-(R/sum(w,na.rm=T)))
+  return(1-(R/sum(window,na.rm=T)))
 }
 
 ###
@@ -494,7 +490,7 @@ circularDispersionGV=function(inraster,window){
 #'Compute circular variance of normal vectors to surface, using the resultant vector length
 #' @param inraster The DEM from which compute the index
 #' @param window The moving window adopted for computing the index
-#'
+#' @import terra
 #' @return The raster with the computed index
 #' @export
 #'
@@ -509,24 +505,20 @@ circularDispersionNV=function(inraster,window){
   #Circular dispersion of normal vectors using the mean resultant length approach.
   #working with angles in the geographical convention
   #window-> the search window/kernel (e.g., window=KernelCircular(3))
-  slope=terrain(inraster,v="slope")
-  aspect=terrain(inraster,v="aspect")
-  #convert in radians!
-  #rad<-function (degree) {
-  #  (degree * pi)/180
-  #}
+  slope=terrain(inraster,v="slope", unit="radians") #Use radians!
+  aspect=terrain(inraster,v="aspect", unit="radians")
+  
   #respect to the formulas of Davis book
   # we consider that sin(90-slope)=cos(slope)
   # with 90-slope the angle of the normal vector respect to the horizontal plane
-  x=sin(rad(slope))*cos(rad(aspect))
-  y=sin(rad(slope))*sin(rad(aspect))
-  z=cos(rad(slope))
-  w=window
-  X=focal(x, w,fun=sum,expand=F,na.rm=F)
-  Y=focal(y, w,fun=sum,expand=F,na.rm=F)
-  Z=focal(z, w,fun=sum,expand=F,na.rm=F)
+  x=sin(slope)*cos(aspect)
+  y=sin(slope)*sin(aspect)
+  z=cos(slope)
+  X=focal(x, w=window,fun=sum,expand=F,na.rm=F)
+  Y=focal(y, w=window,fun=sum,expand=F,na.rm=F)
+  Z=focal(z, w=window,fun=sum,expand=F,na.rm=F)
   R=sqrt(X^2+Y^2+Z^2)
-  return(1-(R/sum(w,na.rm=T)))
+  return(1-(R/sum(window,na.rm=T)))
 }
 
 #vector dispersion using eigenvalues
@@ -558,6 +550,7 @@ roory<-function(x){
 #'Compute circular variance of normal vectors to surface, using the eigen values (only for testing, very slow)
 #' @param inraster The DEM from which compute the index
 #' @param window The moving window adopted for computing the index
+#' @import terra
 #'
 #' @return The raster with the computed index
 #'
@@ -575,20 +568,15 @@ circularEigenNV=function(inraster,window){
   #With small variations of the code you can also calculate anisotropy, considering other eigenvalues
   #s2 and s3.
 
-  slope=terrain(inraster,v="slope")
-  aspect=terrain(inraster,v="aspect")
-  #convert in radians!
-  rad<-function (degree) {
-    (degree * pi)/180
-  }
+  slope=terrain(inraster,v="slope", unit="radians")
+  aspect=terrain(inraster,v="aspect", unit="radians") #Use radians!
 
   #respect to the formulas of Davis book
   # we consider that sin(90-slope)=cos(slope)
   # with 90-slope the angle of the normal vector respect to the horizontal plane
-  x=sin(rad(slope))*cos(rad(aspect))
-  y=sin(rad(slope))*sin(rad(aspect))
-  z=cos(rad(slope))
-  w=window
+  x=sin(slope)*cos(aspect)
+  y=sin(slope)*sin(aspect)
+  z=cos(slope)
   #Build the matrix of cross products
   x2=x^2
   y2=y^2
@@ -596,12 +584,12 @@ circularEigenNV=function(inraster,window){
   xy=x*y
   xz=x*z
   yz=y*z
-  X2=focal(x2, w,fun=sum,expand=F,na.rm=F)
-  Y2=focal(y2, w,fun=sum,expand=F,na.rm=F)
-  Z2=focal(z2, w,fun=sum,expand=F,na.rm=F)
-  XY=focal(xy, w,fun=sum,expand=F,na.rm=F)
-  XZ=focal(xz, w,fun=sum,expand=F,na.rm=F)
-  YZ=focal(yz, w,fun=sum,expand=F,na.rm=F)
+  X2=focal(x2, w=window,fun=sum,expand=F,na.rm=F)
+  Y2=focal(y2, w=window,fun=sum,expand=F,na.rm=F)
+  Z2=focal(z2, w=window,fun=sum,expand=F,na.rm=F)
+  XY=focal(xy, w=window,fun=sum,expand=F,na.rm=F)
+  XZ=focal(xz, w=window,fun=sum,expand=F,na.rm=F)
+  YZ=focal(yz, w=window,fun=sum,expand=F,na.rm=F)
   cp<-c(X2,XY,XZ,XY,Y2,YZ,XZ,YZ,Z2)
   cp=values(cp)
   #colnames(cp)<-(c("X2","XY","XZ","XY","Y2","YZ","XZ","YZ","Z2"))

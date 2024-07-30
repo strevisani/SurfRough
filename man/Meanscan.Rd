@@ -16,7 +16,7 @@ Meanscan(inRaster, kernels, w, exponent)
 \item{exponent}{The exponent: increasing the exponent increase the sensitivity to outliers. Set 2 for Variogram and 1 for Madogram.}
 }
 \value{
-A list of 3 rasters: 1)isotropic roughness; 2) direction of anisotropy; 3)index of anisotropy.
+A SpatRaster with 3 layers: 1)isotropic roughness; 2) direction of anisotropy; 3)index of anisotropy.
 }
 \description{
 With this you can compute variogram and madogram (but remember that for
