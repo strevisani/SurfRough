@@ -6,7 +6,7 @@ July 29, 2024
 ## SurfRough
 
 Algorithms for surface texture (roughness) and image texture analysis
-using a geostatistical based approach from [Trevisano et
+using a geostatistical based approach from [Trevisani et
 al. (2023)](https://doi.org/10.1016/j.geomorph.2023.108838).
 
 ## Installation
