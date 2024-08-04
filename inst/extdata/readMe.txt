@@ -6,3 +6,5 @@ http://www.territorio.provincia.tn.it/portal/server.pt/community/lidar/847/lidar
 These are available with creative common license
 
 
+Venice 5 August 2024
+DEMs cropped for reducing file size
