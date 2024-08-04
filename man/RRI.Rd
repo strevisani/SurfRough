@@ -38,7 +38,7 @@ Intermountain Journal of Science 5:23.
 \item Wilson, M.F.J., O'Connell, B., Brown, C., Guinan, J.C. & Grehan, A.J. 2007.
 Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
-\item Trevisani S., Teza G., Guth P.L., 2023 (Preprint). Hacking the topographic ruggedness index.
-Submitted to "Remote Sensing of Environment" 10.5281/zenodo.7716785
+\item Trevisani  Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. 
+Geomorphology,Volume 439, 2023.
 }
 }
