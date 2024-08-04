@@ -29,8 +29,6 @@ The direction of anisotropy is in degrees according to geographical convention.
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w=KernelCircular(3)
 rough2c=Madscan(dem,k2ck2, w)
-#define understandable names of layers
-names(rough2c)=c("IsoRough","AnisoDir","AnisoR")
 #Plot isotropic roughness
 plot(rough2c$IsoRough)
 #Plot anisotropy index/strenght
