@@ -17,6 +17,4 @@ Suggests: tinytest
 URL: https://github.com/strevisani/SurfRough, https://doi.org/10.5281/zenodo.7132160
 NeedsCompilation: no
 Packaged: 2023-03-10 15:13:17 UTC; x
-Author: Sebastiano Trevisani [aut, cre]
-    (<https://orcid.org/0000-0001-8436-7798>)
 Maintainer: Sebastiano Trevisani <strevisani@iuav.it>
