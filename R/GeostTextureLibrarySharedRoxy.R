@@ -93,9 +93,7 @@ matDeg<-function(alpha){
 #'
 #' @return The angle in radians
 #'
-#'
-#'@examples
-#'#rad(45)
+#' @noRd
 rad<-function (degree) {
   (degree * pi)/180
 }
