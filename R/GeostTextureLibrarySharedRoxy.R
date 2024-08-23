@@ -497,6 +497,7 @@ circularDispersionNV=function(inraster,window){
 #' @param x Matrix cross products
 #'
 #' @return The dispersion/smoothness
+#' @noRd
 roory<-function(x){
   #function for using the eigenvalues approach
   x=matrix(x,nrow=3,ncol=3)
