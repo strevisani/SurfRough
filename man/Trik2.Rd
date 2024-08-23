@@ -39,6 +39,6 @@ Intermountain Journal of Science 5:23.
 Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 \item Trevisani S., Teza G., Guth P.L., 2023 (Preprint). Hacking the topographic ruggedness index.
-Submitted to "Remote Sensing of Environment" 10.5281/zenodo.7716785
+10.5281/zenodo.7716785
 }
 }

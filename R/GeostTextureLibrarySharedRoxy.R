@@ -639,7 +639,7 @@ Trik2=function(x){
 #' 2) Wilson, M.F.J., O'Connell, B., Brown, C., Guinan, J.C. & Grehan, A.J. 2007.
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
-#' 3)Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
 #' https://doi.org/10.1016/j.geomorph.2023.108838
 #'
 #' @param x The DEM from which to compute the index
