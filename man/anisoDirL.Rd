@@ -16,6 +16,3 @@ A raster with the direction (in degrees, geographical) of maximum continuity
 The input is represented by a list of rasters with the spatial variability index (e.g., MAD, variogram, etc.) computed
 in four directions (N-S, NE-SW, E-W, SE-NW)
 }
-\examples{
-#
-}

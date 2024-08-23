@@ -16,6 +16,3 @@ A raster with the index of anisotropy (min=0 max=1)
 The input is represented by a list of rasters with the spatial variability index (e.g., MAD, variogram, etc.) computed
 in four directions (N-S, NE-SW, E-W, SE-NW)
 }
-\examples{
-#
-}

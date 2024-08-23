@@ -17,6 +17,3 @@ A list of rasters with the median of absolute values in the search window
 \description{
 Calculate the median of absolute values found in a search window for each raster in a list
 }
-\examples{
-#
-}

@@ -17,6 +17,3 @@ The raster with the computed index
 \description{
 Compute circular variance of normal vectors to surface, using the eigen values (only for testing, very slow)
 }
-\examples{
-#
-}

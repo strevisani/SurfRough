@@ -41,6 +41,11 @@ k1ck2
 k2ck2
 }
 \references{
-xxx
+\enumerate{
+\item Trevisani, S. & Rocca, M. 2015. MAD: Robust image texture analysis for applications in high resolution geomorphometry.
+Computers and Geosciences, vol. 81, pp. 78-92.
+\item Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
+CATENA,Volume 223, ISSN 0341-8162,https://doi.org/10.1016/j.catena.2023.106927
+}
 }
 \keyword{datasets}
