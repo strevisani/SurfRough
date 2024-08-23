@@ -187,10 +187,6 @@ CalcMedians=function(deltas,w){
 #' @param SE Spatial variability along SE-NW direction
 #'
 #' @return A raster with the direction (in degrees, geographical) of maximum continuity
-#'
-#'
-#' @examples
-#' #
 anisoDir=function(N,NE,E,SE){
   #AnisoDir calculates the direction of maximum continuity
   #using a circular statistics approach and using four directions
@@ -211,10 +207,6 @@ anisoDir=function(N,NE,E,SE){
 #' @importFrom terra lapp
 #'
 #' @return A raster with the direction (in degrees, geographical) of maximum continuity
-#'
-#'
-#' @examples
-#' #
 anisoDirL=function(x){
   #AnisoDirL calculates the direction of maximum continuity
   #using a circular statistics approach and using a list of four
@@ -236,10 +228,6 @@ anisoDirL=function(x){
 #' @param SE Spatial vairability along SE-NW direction
 #'
 #' @return A raster with the index of anisotropy (min=0 max=1)
-#'
-#'
-#' @examples
-#' #
 anisoR=function(N,NE,E,SE){
   #Standardized resultant length. This is used as anisotropy index
   #Use four rasters with directional differences: N, NE,E, SE
@@ -256,10 +244,6 @@ anisoR=function(N,NE,E,SE){
 #' @importFrom terra lapp
 #'
 #' @return A raster with the index of anisotropy (min=0 max=1)
-#'
-#'
-#' @examples
-#' #
 anisoRL=function(x){
   #Standardized resultant length. This is used as anisotropy index
   #Use a list of four rasters with directional differences: N, NE,E, SE
@@ -305,8 +289,6 @@ anisoRL=function(x){
 #' plot(rough2c$IsoRough)
 #' #Plot anisotropy index/strenght
 #' plot(rough2c$AnisoR)
-#' #Save a multilayer raster for ArcMap
-#' #writeRaster(rough2c,"rough2c.tif",NAflag =-3.40282346639e+038,overwrite=TRUE)
 #'
 Madscan<-function(inRaster,kernels,w){
   #Calculate MAD basic indexes based on 4 directions in this
@@ -354,10 +336,6 @@ Madscan<-function(inRaster,kernels,w){
 #' @import terra
 #'
 #' @return A raster with the mean of absolute values in the search window
-#'
-#'
-#' @examples
-#' #
 CalcMeans=function(deltas,w,exponent){
   #Compute the means of directional
   #absolute differences elevated at an exponent.
@@ -519,10 +497,6 @@ circularDispersionNV=function(inraster,window){
 #' @param x Matrix cross products
 #'
 #' @return The dispersion/smoothness
-#'
-#'
-#' @examples
-#' #
 roory<-function(x){
   #function for using the eigenvalues approach
   x=matrix(x,nrow=3,ncol=3)
@@ -545,10 +519,6 @@ roory<-function(x){
 #' @import terra
 #'
 #' @return The raster with the computed index
-#'
-#'
-#' @examples
-#' #
 circularEigenNV=function(inraster,window){
   #normal vector dispersion using the eigenvalues approach.
   #inraster->input raster (DTM, image, etc.)
