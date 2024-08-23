@@ -23,8 +23,8 @@
 #Computers and Geosciences, vol. 81, pp. 78-92. https://biblioproxy.cnr.it:2481/10.1016/j.cageo.2015.04.003
 #2) Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
 #CATENA,Volume 223, ISSN 0341-8162,https://doi.org/10.1016/j.catena.2023.106927
-#3)Trevisani S., Teza G., Guth P.L., 2023 (Preprint). Hacking the topographic ruggedness index.
-#  10.5281/zenodo.7716785
+#3)Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+# https://doi.org/10.1016/j.geomorph.2023.108838
 #
 #THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 #IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -586,7 +586,7 @@ circularEigenNV=function(inraster,window){
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023 (Preprint). Hacking the topographic ruggedness index.
-#' Submitted to "Remote Sensing of Environment" 10.5281/zenodo.7716785
+#' 10.5281/zenodo.7716785
 #'
 #' @param x The DEM from which to compute the index
 #'
@@ -639,8 +639,8 @@ Trik2=function(x){
 #' 2) Wilson, M.F.J., O'Connell, B., Brown, C., Guinan, J.C. & Grehan, A.J. 2007.
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
-#' 3) Trevisani S., Teza G., Guth P.L., 2023 (Preprint). Hacking the topographic ruggedness index.
-#' Submitted to "Remote Sensing of Environment" 10.5281/zenodo.7716785
+#' 3)Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' https://doi.org/10.1016/j.geomorph.2023.108838
 #'
 #' @param x The DEM from which to compute the index
 #'
