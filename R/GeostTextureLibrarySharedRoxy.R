@@ -24,7 +24,7 @@
 #2) Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
 #CATENA,Volume 223, ISSN 0341-8162,https://doi.org/10.1016/j.catena.2023.106927
 #3)Trevisani S., Teza G., Guth P.L., 2023 (Preprint). Hacking the topographic ruggedness index.
-# Submitted to "Remote Sensing of Environment" 10.5281/zenodo.7716785
+#  10.5281/zenodo.7716785
 #
 #THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 #IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
