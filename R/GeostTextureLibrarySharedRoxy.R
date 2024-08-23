@@ -77,10 +77,7 @@
 #'
 #' @return The angle in degrees in the other system
 #'
-#'
-#' @examples
-#' #a=matDeg(45)
-#' #a
+#' @noRd
 matDeg<-function(alpha){
   eta=450-alpha
   if(eta>=360) eta=eta-360 else eta=eta
