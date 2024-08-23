@@ -156,9 +156,6 @@ KernelRectangular=function(lenx,leny){
 #'
 #' @return A list of rasters with the median of absolute values in the search window
 #' @import terra
-#'
-#' @examples
-#' #
 CalcMedians=function(deltas,w){
   #compute the medians of directional
   #absolute differences from a list
