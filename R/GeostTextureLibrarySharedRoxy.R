@@ -283,8 +283,6 @@ anisoRL=function(x){
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w=KernelCircular(3)
 #' rough2c=Madscan(dem,k2ck2, w)
-#' #define understandable names of layers
-#' names(rough2c)=c("IsoRough","AnisoDir","AnisoR")
 #' #Plot isotropic roughness
 #' plot(rough2c$IsoRough)
 #' #Plot anisotropy index/strenght
@@ -377,9 +375,6 @@ CalcMeans=function(deltas,w,exponent){
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w=KernelCircular(3)
 #' rough2c=Meanscan(dem,k2ck2, w,2)
-#' # give understandable names to layers
-#' names(rough2c)=c("IsoRough","AnisoDir","AnisoR")
-#' #Plot isotropic roughness based on variogram estimator
 #' #(divide by two if you need classical estimator)
 #' plot(rough2c$IsoRough)
 #'
