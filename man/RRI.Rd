@@ -2,12 +2,18 @@
 % Please edit documentation in R/GeostTextureLibrarySharedRoxy.R
 \name{RRI}
 \alias{RRI}
+\alias{RRI.numeric}
+\alias{RRI.SpatRaster}
 \title{RRI: Radial Roughness index}
 \usage{
 RRI(x)
+
+\method{RRI}{numeric}(x)
+
+\method{RRI}{SpatRaster}(x)
 }
 \arguments{
-\item{x}{A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
+\item{x}{A vector of numeric values from a focal window in a DEM from which to compute the index}
 }
 \value{
 isotropic roughness (in the same units of input)
@@ -23,12 +29,16 @@ One could also use a 3x3 kernel using only the 4 differences centered on the cen
 but the metric would be very noisy.
 The input is the DEM (no need to detrend).
 }
+\details{
+\code{RRI()} can be used either as a standalone function applied to a \link[terra:SpatRaster-class]{terra::SpatRaster}, or as
+a kernel to be used with \link[terra:focal]{terra::focal}. The standalone function uses batch processing implemented
+in C and will be considerably faster (up to 20-30x).
+}
 \examples{
-dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
-w <- matrix(1, nrow=5, ncol=5)
-roughTrick5x5_v1=focal(dem, w=w, fun=RRI)
-roughTrick5x5_v2=RRI(dem)
-plot(c(roughTrick5x5_v1, roughTrick5x5_v2))
+dem = rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif", sep = ""))
+w <- matrix(1, nrow = 5, ncol = 5)
+roughTrick5x5 = focal(dem, w = w, fun = RRI)
+plot(roughTrick5x5)
 }
 \references{
 \enumerate{

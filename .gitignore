@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 SurfRough.Rproj
+*.o
+*.so
+*.dll

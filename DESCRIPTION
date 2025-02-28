@@ -1,7 +1,7 @@
 Package: SurfRough
 Title: Calculate Surface/Image Texture Indexes
 Version: 0.0.1.0
-Authors@R: 
+Authors@R:
     c(person("Sebastiano", "Trevisani", email="strevisani@iuav.it", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8436-7798")),
     person("Ilich", "Alexander", role = "ctb", comment = c(ORCID = "0000-0003-1758-8499")))
@@ -15,6 +15,6 @@ LazyData: true
 Depends: R (>= 3.5.0), terra
 Suggests: tinytest
 URL: https://github.com/strevisani/SurfRough, https://doi.org/10.5281/zenodo.7132160
-NeedsCompilation: no
+NeedsCompilation: yes
 Packaged: 2023-03-10 15:13:17 UTC; x
 Maintainer: Sebastiano Trevisani <strevisani@iuav.it>
