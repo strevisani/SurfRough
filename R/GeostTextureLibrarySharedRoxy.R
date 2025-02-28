@@ -1,3 +1,6 @@
+###Update February 2025
+#Added cpp version of RRI, approximately 20 times faster than the original version
+#After this, other implementations will follow...
 ###update 3 March 2023###
 #news
 #1) Trik2 and RRI functions
@@ -765,8 +768,8 @@ RRI <- function(x) {
 #' @examples
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w <- matrix(1, nrow=5, ncol=5)
-#' roughTrick5x5=focal(dem, w=w, fun=RRI)
-#' plot(roughTrick5x5)
+#' roughRRI=focal(dem, w=w, fun=RRI)
+#' plot(roughRRI)
 RRI.numeric <- function(x) {
   (
     #external differences
@@ -818,11 +821,55 @@ RRI.numeric <- function(x) {
 #'
 #' @examples
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
-#' roughTrick5x5=RRI(dem)
-#' plot(roughTrick5x5)
+#' roughRRI=RRI(dem)
+#' plot(roughRRI)
 RRI.SpatRaster <- function(x) {
   focal(x, w=c(5,5), fun = RRI.numeric)
 }
+
+
+#' RRI: Radial Roughness index CPP  version
+#'
+#' Fast cpp version implemented by "tzakharko" (to add correct references)
+#' Modified TRI, based on increments of order 2  (removing slope dependence) and correcting for diagonal distance.
+#' RRI modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to the central pixel,
+#' so as to remove the effect of local slope.
+#' This version corrects for the diagonal distance using bilinear interpolation.
+#' It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
+#' are used in the estimation.
+#' One could also use a 3x3 kernel using only the 4 differences centered on the central pixel
+#' but the metric would be very noisy.
+#' The input is the DEM (no need to detrend).
+#'
+#' @references
+#'
+#' 1) Riley, S. J., S. D. DeGloria, and R. Elliott. 1999.
+#' A terrain ruggedness index that quantifies topographic heterogeneity.
+#'  Intermountain Journal of Science 5:23.
+#' 2) Wilson, M.F.J., O'Connell, B., Brown, C., Guinan, J.C. & Grehan, A.J. 2007.
+#' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
+#' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
+#' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' https://doi.org/10.1016/j.geomorph.2023.108838
+#'
+#' @param x The DEM as a SpatRaster from which to compute the index
+#'
+#'
+#' @return isotropic roughness (in the same units of input)
+#' @export
+#'
+#'
+#' @examples
+#' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' roughRRI=RRIcpp(dem)
+#' plot(roughRRI)
+RRIcpp <- function(x) {
+  out<- focalCpp(x, w=5, fun=RRI_cpp)
+  names(out)<- "rri"
+  return(out)
+}
+
+
 
 ###End other roughness indexes###
 

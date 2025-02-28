@@ -26,8 +26,8 @@ The input is the DEM (no need to detrend).
 \examples{
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w <- matrix(1, nrow=5, ncol=5)
-roughTrick5x5=focal(dem, w=w, fun=RRI)
-plot(roughTrick5x5)
+roughRRI=focal(dem, w=w, fun=RRI)
+plot(roughRRI)
 }
 \references{
 \enumerate{
