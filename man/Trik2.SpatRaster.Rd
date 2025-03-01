@@ -25,6 +25,7 @@ but the metric would be very noisy.
 The input is the DEM (no need to detrend).
 }
 \examples{
+library(terra)
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 roughTrik5x5=Trik2(dem)
 plot(roughTrik5x5)
