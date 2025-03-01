@@ -26,6 +26,7 @@ The direction of anisotropy is in degrees according to geographical convention.
 # MAD for lag 2 with differences of order 2 using a circular search window of radius 3.
 # Using differences of order 1, you should
 # apply these on a detrended surface/image.
+library(terra)
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w=KernelCircular(3)
 rough2c=Madscan(dem,k2ck2, w)

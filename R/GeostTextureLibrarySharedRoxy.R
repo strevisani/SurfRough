@@ -283,6 +283,7 @@ anisoRL=function(x){
 #' # MAD for lag 2 with differences of order 2 using a circular search window of radius 3.
 #' # Using differences of order 1, you should
 #' # apply these on a detrended surface/image.
+#' library(terra)
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w=KernelCircular(3)
 #' rough2c=Madscan(dem,k2ck2, w)
@@ -375,6 +376,7 @@ CalcMeans=function(deltas,w,exponent){
 #' #' Variogram-like for lag 2 with differences of order 2 using a circular search window of radius 3.
 #' # Using differences of order 1, you should
 #' # apply these on a detrended surface/image.
+#' library(terra)
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w=KernelCircular(3)
 #' rough2c=Meanscan(dem,k2ck2, w,2)
@@ -430,6 +432,7 @@ Meanscan<-function(inRaster,kernels,w,exponent){
 #'
 #' @examples
 #' # Gradient vector dispersion using a circular search window of radius 3.
+#' library(terra)
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w=KernelCircular(3)
 #' roughGrad=circularDispersionGV(dem,w)
@@ -465,6 +468,7 @@ circularDispersionGV=function(inraster,window){
 #' @examples
 #' #
 #' #Normal vector dispersion using a circular search window of radius 3.
+#' library(terra)
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w=KernelCircular(3)
 #' roughVDR=circularDispersionNV(dem,w)
@@ -595,6 +599,7 @@ circularEigenNV=function(inraster,window){
 #'
 #'
 #' @examples
+#' library(terra)
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w <- matrix(1, nrow=5, ncol=5)
 #' roughTrik5x5_v1=focal(dem, w=w, fun=Trik2)
@@ -638,6 +643,7 @@ Trik2 <- function(x) {
 #'
 #'
 #' @examples
+#' library(terra)
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w <- matrix(1, nrow=5, ncol=5)
 #' roughTrik5x5=focal(dem, w=w, fun=Trik2)
@@ -692,6 +698,7 @@ Trik2.numeric=function(x){
 #'
 #'
 #' @examples
+#' library(terra)
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' roughTrik5x5=Trik2(dem)
 #' plot(roughTrik5x5)
@@ -728,7 +735,8 @@ Trik2.SpatRaster=function(x){
 #' @return isotropic roughness (in the same units of input)
 #' @export
 #' @examples
-#' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w <- matrix(1, nrow=5, ncol=5)
 #' roughTrick5x5_v1=focal(dem, w=w, fun=RRI)
 #' roughTrick5x5_v2=RRI(dem)

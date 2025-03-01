@@ -20,6 +20,7 @@ Compute circular variance of normal vectors to surface, using the resultant vect
 \examples{
 #
 #Normal vector dispersion using a circular search window of radius 3.
+library(terra)
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w=KernelCircular(3)
 roughVDR=circularDispersionNV(dem,w)

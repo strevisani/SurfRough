@@ -25,6 +25,7 @@ but the metric would be very noisy.
 The input is the DEM (no need to detrend).
 }
 \examples{
+library(terra)
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w <- matrix(1, nrow=5, ncol=5)
 roughTrik5x5=focal(dem, w=w, fun=Trik2)

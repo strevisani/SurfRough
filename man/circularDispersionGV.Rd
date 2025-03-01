@@ -19,6 +19,7 @@ Compute circular variance of aspect (i.e. of the gradient vector)
 }
 \examples{
 # Gradient vector dispersion using a circular search window of radius 3.
+library(terra)
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w=KernelCircular(3)
 roughGrad=circularDispersionGV(dem,w)
