@@ -2,12 +2,22 @@
 % Please edit documentation in R/GeostTextureLibrarySharedRoxy.R
 \name{RRI}
 \alias{RRI}
+\alias{RRI.numeric}
+\alias{RRI.SpatRaster}
 \title{RRI: Radial Roughness index}
 \usage{
-RRI(x)
+RRI(x, ...)
+
+\method{RRI}{numeric}(x, ...)
+
+\method{RRI}{SpatRaster}(x, ..., .method = c("rcpp", "r"))
 }
 \arguments{
 \item{x}{A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
+
+\item{...}{reserved for future use}
+
+\item{.method}{Either \code{r} or \code{rcpp} (fast batch processing using C++)}
 }
 \value{
 isotropic roughness (in the same units of input)
