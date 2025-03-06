@@ -568,12 +568,12 @@ circularEigenNV=function(inraster,window){
 #update 3 March 2023
 
 
-#' Improved TRI (with differences of order 2), removing slope dependence.
+#' Improved TRI (with differences of order 2), reducing/removing slope dependence.
 #'
 #' It is essentially a radial roughness index.
 #' TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
-#' so as to remove the effect of local slope.
-#' This version does not correct for diagonal distance and therefore is mainly for simulation purposes,
+#' so as to remove/reduce the effect of local slope.
+#' This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
 #' so in practice the Radial Roughness Index calculated by the RRI function should be used instead.
 #' It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
 #' are used in the estimation.
@@ -612,12 +612,12 @@ Trik2 <- function(x) {
 }
 
 
-#' Improved TRI (with differences of order 2), removing slope dependence.
+#' Improved TRI (with differences of order 2), reducing/removing slope dependence.
 #'
 #' It is essentially a radial roughness index.
 #' TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
 #' so as to remove the effect of local slope.
-#' This version does not correct for diagonal distance and therefore is mainly for simulation purposes,
+#' This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
 #' so in practice the Radial Roughness Index calculated by the RRI function should be used instead.
 #' It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
 #' are used in the estimation.
@@ -667,12 +667,12 @@ Trik2.numeric=function(x){
   )/12
 }
 
-#' Improved TRI (with differences of order 2), removing slope dependence.
+#' Improved TRI (with differences of order 2), reducing/removing slope dependence.
 #'
 #' It is essentially a radial roughness index.
 #' TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
-#' so as to remove the effect of local slope.
-#' This version does not correct for diagonal distance and therefore is mainly for simulation purposes,
+#' so as to reduce/remove the effect of local slope.
+#' This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
 #' so in practice the Radial Roughness Index calculated by the RRI function should be used instead.
 #' It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
 #' are used in the estimation.
@@ -709,9 +709,9 @@ Trik2.SpatRaster=function(x){
 
 #' RRI: Radial Roughness index
 #'
-#' Modified TRI, based on increments of order 2  (removing slope dependence) and correcting for diagonal distance.
+#' Modified TRI, based on increments of order 2  (reducing/removing slope dependence) and correcting for diagonal distance.
 #' RRI modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to the central pixel,
-#' so as to remove the effect of local slope.
+#' so as to reduce/remove the effect of local slope.
 #' This version corrects for the diagonal distance using bilinear interpolation.
 #' It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
 #' are used in the estimation.
@@ -738,9 +738,9 @@ Trik2.SpatRaster=function(x){
 #' library(terra)
 #' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w <- matrix(1, nrow=5, ncol=5)
-#' roughTrick5x5_v1=focal(dem, w=w, fun=RRI)
-#' roughTrick5x5_v2=RRI(dem)
-#' plot(c(roughTrick5x5_v1, roughTrick5x5_v2))
+#' roughRRI_v1=focal(dem, w=w, fun=RRI)
+#' roughRRI_v2=RRI(dem)
+#' plot(c(roughRRI_v1, roughRRI_v2))
 RRI <- function(x, ...) {
   UseMethod("RRI")
 }
@@ -778,6 +778,9 @@ RRI.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
     focal(x, w = 5, fun = RRI.numeric)
   }
 }
+
+#Update March 2025
+#to add RRIk3
 
 ###End other roughness indexes###
 
