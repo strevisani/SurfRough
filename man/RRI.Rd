@@ -23,9 +23,9 @@ RRI(x, ...)
 isotropic roughness (in the same units of input)
 }
 \description{
-Modified TRI, based on increments of order 2  (removing slope dependence) and correcting for diagonal distance.
+Modified TRI, based on increments of order 2  (reducing/removing slope dependence) and correcting for diagonal distance.
 RRI modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to the central pixel,
-so as to remove the effect of local slope.
+so as to reduce/remove the effect of local slope.
 This version corrects for the diagonal distance using bilinear interpolation.
 It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
 are used in the estimation.
@@ -37,9 +37,9 @@ The input is the DEM (no need to detrend).
 library(terra)
 dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w <- matrix(1, nrow=5, ncol=5)
-roughTrick5x5_v1=focal(dem, w=w, fun=RRI)
-roughTrick5x5_v2=RRI(dem)
-plot(c(roughTrick5x5_v1, roughTrick5x5_v2))
+roughRRI_v1=focal(dem, w=w, fun=RRI)
+roughRRI_v2=RRI(dem)
+plot(c(roughRRI_v1, roughRRI_v2))
 }
 \references{
 \enumerate{

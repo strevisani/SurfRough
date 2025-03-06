@@ -780,7 +780,69 @@ RRI.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
 }
 
 #Update March 2025
-#to add RRIk3
+#' RRIK3: Radial Roughness index with differences of order 3
+#'
+#' Extension of RRI using differences of order 3
+#' Accordingly, this version filters out a trend of order 2, so it reduces still more the dependence
+#' on slope and partially on curvature.
+#' The input is the DEM (no need to detrend).
+#'
+#' @references
+#'
+#'Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' https://doi.org/10.1016/j.geomorph.2023.108838
+#'
+#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param ... reserved for future use
+#' @return isotropic roughness (in the same units of input)
+#' @export
+#' @examples
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' roughRRIK3=RRIK3(dem)
+#' plot(roughRRIK3)
+RRIK3 <- function(x, ...) {
+  UseMethod("RRIK3")
+}
+
+#' @export
+#' @rdname RRIK3
+RRIK3.numeric <- function(x, ...) {
+  (
+    abs(x[18]-3*x[13]+3*x[8]-x[3])
+    +abs((0.207106781186548*x[12]+0.0857864376269049*x[13]+0.5*x[17]+0.207106781186547*x[18])
+         -3*x[13]+3*(0.207106781186547*x[8]+0.5*x[9]+0.085786437626905*x[13]+0.207106781186547*x[14])
+         -(0.242640687119285*x[4]+0.17157287525381*x[5]+0.34314575050762*x[9]+0.242640687119285*x[10]))
+    +abs(x[12]-3*x[13]+3*x[14]-x[15])
+    +abs((0.5*x[7]+0.207106781186548*x[8]+0.207106781186547*x[12]+0.085786437626905*x[13])
+         -3*x[13]+3*(0.085786437626905*x[13]+0.207106781186547*x[14]+0.207106781186548*x[18]+0.5*x[19])
+         -(0.34314575050762*x[19]+0.242640687119285*x[20]+0.242640687119285*x[24]+0.17157287525381*x[25]))
+    +abs(x[8]-3*x[13]+3*x[18]-x[23])
+    +abs((0.207106781186547*x[8]+0.5*x[9]+0.085786437626905*x[13]+0.207106781186547*x[14])
+         -3*x[13]+3*(0.207106781186548*x[12]+0.0857864376269049*x[13]+0.5*x[17]+0.207106781186547*x[18])
+         -(0.242640687119285*x[16]+0.34314575050762*x[17]+0.17157287525381*x[21]+0.242640687119285*x[22]))
+    +abs(x[14]-3*x[13]+3*x[12]-x[11])
+    +abs((0.085786437626905*x[13]+0.207106781186547*x[14]+0.207106781186548*x[18]+0.5*x[19])
+         -3*x[13]+3*(0.5*x[7]+0.207106781186548*x[8]+0.207106781186547*x[12]+0.085786437626905*x[13])
+         -(0.17157287525381*x[1]+0.242640687119285*x[2]+0.242640687119285*x[6]+0.34314575050762*x[7]))
+  )/8
+}        
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
+#' @export
+#' @rdname RRIK3
+RRIK3.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
+  .method <- match.arg(.method)
+  
+  if (identical(.method, "rcpp")) {
+    focalCpp(x, w = 5, fun = RRIK3_cpp)
+    #message("cpp version still to be implemented")
+  } else {
+    focal(x, w = 5, fun = RRIK3.numeric)
+  }
+}
+
+#End Update March 2025
+
 
 ###End other roughness indexes###
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/GeostTextureLibrarySharedRoxy.R
 \name{Trik2}
 \alias{Trik2}
-\title{Improved TRI (with differences of order 2), removing slope dependence.}
+\title{Improved TRI (with differences of order 2), reducing/removing slope dependence.}
 \usage{
 Trik2(x)
 }
@@ -15,8 +15,8 @@ isotropic roughness (in the same units of input)
 \description{
 It is essentially a radial roughness index.
 TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
-so as to remove the effect of local slope.
-This version does not correct for diagonal distance and therefore is mainly for simulation purposes,
+so as to remove/reduce the effect of local slope.
+This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
 so in practice the Radial Roughness Index calculated by the RRI function should be used instead.
 It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
 are used in the estimation.
