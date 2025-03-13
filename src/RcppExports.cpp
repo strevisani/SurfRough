@@ -36,10 +36,38 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RRIMin_cpp
+NumericVector RRIMin_cpp(NumericVector x, size_t ni, size_t nw);
+RcppExport SEXP _SurfRough_RRIMin_cpp(SEXP xSEXP, SEXP niSEXP, SEXP nwSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< size_t >::type ni(niSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nw(nwSEXP);
+    rcpp_result_gen = Rcpp::wrap(RRIMin_cpp(x, ni, nw));
+    return rcpp_result_gen;
+END_RCPP
+}
+// RRIMax_cpp
+NumericVector RRIMax_cpp(NumericVector x, size_t ni, size_t nw);
+RcppExport SEXP _SurfRough_RRIMax_cpp(SEXP xSEXP, SEXP niSEXP, SEXP nwSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< size_t >::type ni(niSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nw(nwSEXP);
+    rcpp_result_gen = Rcpp::wrap(RRIMax_cpp(x, ni, nw));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SurfRough_RRI_cpp", (DL_FUNC) &_SurfRough_RRI_cpp, 3},
     {"_SurfRough_RRIK3_cpp", (DL_FUNC) &_SurfRough_RRIK3_cpp, 3},
+    {"_SurfRough_RRIMin_cpp", (DL_FUNC) &_SurfRough_RRIMin_cpp, 3},
+    {"_SurfRough_RRIMax_cpp", (DL_FUNC) &_SurfRough_RRIMax_cpp, 3},
     {NULL, NULL, 0}
 };
 

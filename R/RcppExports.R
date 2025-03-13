@@ -9,3 +9,11 @@ RRIK3_cpp <- function(x, ni, nw) {
     .Call(`_SurfRough_RRIK3_cpp`, x, ni, nw)
 }
 
+RRIMin_cpp <- function(x, ni, nw) {
+    .Call(`_SurfRough_RRIMin_cpp`, x, ni, nw)
+}
+
+RRIMax_cpp <- function(x, ni, nw) {
+    .Call(`_SurfRough_RRIMax_cpp`, x, ni, nw)
+}
+
