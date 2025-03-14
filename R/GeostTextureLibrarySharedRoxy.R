@@ -789,7 +789,7 @@ RRI.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
 #'
 #' @references
 #'
-#'Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
 #' https://doi.org/10.1016/j.geomorph.2023.108838
 #'
 #' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
@@ -826,13 +826,14 @@ RRIK3.numeric <- function(x, ...) {
          -3*x[13]+3*(0.5*x[7]+0.207106781186548*x[8]+0.207106781186547*x[12]+0.085786437626905*x[13])
          -(0.17157287525381*x[1]+0.242640687119285*x[2]+0.242640687119285*x[6]+0.34314575050762*x[7]))
   )/8
-}        
+}
+
 #' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
 #' @export
 #' @rdname RRIK3
 RRIK3.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
   .method <- match.arg(.method)
-  
+
   if (identical(.method, "rcpp")) {
     focalCpp(x, w = 5, fun = RRIK3_cpp)
     #message("cpp version still to be implemented")
@@ -840,6 +841,125 @@ RRIK3.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
     focal(x, w = 5, fun = RRIK3.numeric)
   }
 }
+
+#' RRIMin: Minimum Radial Roughness index
+#'
+#' Same as RRI but instead of computing the mean of the absolute differences of order 2,
+#' the minimum is computed.
+#' This can be more meaningful for ecological processes (i.e., what matters could be
+#' the lowest roughness found along the directions considered)
+#' Comparing this with RRImax you can get a proxy of anisotropy.
+#' The input is the DEM (no need to detrend).
+#'
+#' @references
+#'
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' https://doi.org/10.1016/j.geomorph.2023.108838
+#'
+#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param ... reserved for future use
+#' @return isotropic roughness (in the same units of input)
+#' @export
+#' @examples
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' roughRRImin=RRIMin(dem)
+#' plot(roughRRImin)
+RRIMin <- function(x, ...) {
+  UseMethod("RRIMin")
+}
+
+#' @export
+#' @rdname RRIMin
+RRIMin.numeric <- function(x, ...) {
+  min(c(
+    #external differences
+    abs(-0.5*x[1]-0.5*x[13]-0.207106781186547*x[2]-0.207106781186547*x[6]-0.207106781186547*x[8]-0.207106781186547*x[12]+1.82842712474619*x[7]),
+    abs(-x[11]+2*x[12]-x[13]),
+    abs(-0.5*x[21]-0.5*x[13]-0.207106781186547*x[16]-0.207106781186547*x[22]-0.207106781186547*x[12]-0.207106781186547*x[18]+1.82842712474619*x[17]),
+    abs(-x[23]+2*x[18]-x[13]),
+    abs(-0.5*x[25]-0.5*x[13]-0.207106781186547*x[20]-0.207106781186547*x[24]-0.207106781186547*x[14]-0.207106781186547*x[18]+1.82842712474619*x[19]),
+    abs(-x[15]+2*x[14]-x[13]),
+    abs(-0.5*x[5]-0.5*x[13]-0.207106781186547*x[4]-0.207106781186547*x[10]-0.207106781186547*x[8]-0.207106781186547*x[14]+1.82842712474619*x[9]),
+    abs(-x[3]+2*x[8]-x[13]),
+    #You could define a function using only the following 4 directional differences
+    abs(-0.5*x[7]-0.5*x[19]-0.207106781186547*x[8]-0.207106781186547*x[12]-0.207106781186547*x[14]-0.207106781186547*x[18]+1.82842712474619*x[13]),
+    abs(-x[12]+2*x[13]-x[14]),
+    abs(-0.5*x[17]-0.5*x[9]-0.207106781186547*x[8]-0.207106781186547*x[12]-0.207106781186547*x[14]-0.207106781186547*x[18]+1.82842712474619*x[13]),
+    abs(-x[8]+2*x[13]-x[18])
+  ))
+}
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
+#' @export
+#' @rdname RRIMin
+RRIMin.SpatRaster <- function(x, ..., .method = c("r", "rcpp")) {
+  .method <- match.arg(.method)
+
+  if (identical(.method, "rcpp")) {
+    focalCpp(x, w = 5, fun = RRIMin_cpp)
+  } else {
+    focal(x, w = 5, fun = RRIMin.numeric)
+  }
+}
+
+#' RRIMax: Maximum Radial Roughness index
+#'
+#' Same as RRI but instead of computing the mean of the absolute differences of order 2,
+#' the maximum is computed.
+#' Comparing this with RRImin you can get a proxy of anisotropy.
+#' The input is the DEM (no need to detrend).
+#'
+#' @references
+#'
+#'Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' https://doi.org/10.1016/j.geomorph.2023.108838
+#'
+#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param ... reserved for future use
+#' @return isotropic roughness (in the same units of input)
+#' @export
+#' @examples
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' roughRRIMax=RRIMax(dem)
+#' plot(roughRRIMax)
+RRIMax <- function(x, ...) {
+  UseMethod("RRIMax")
+}
+
+#' @export
+#' @rdname RRIMax
+RRIMax.numeric <- function(x, ...) {
+  max(c(
+    #external differences
+    abs(-0.5*x[1]-0.5*x[13]-0.207106781186547*x[2]-0.207106781186547*x[6]-0.207106781186547*x[8]-0.207106781186547*x[12]+1.82842712474619*x[7]),
+    abs(-x[11]+2*x[12]-x[13]),
+    abs(-0.5*x[21]-0.5*x[13]-0.207106781186547*x[16]-0.207106781186547*x[22]-0.207106781186547*x[12]-0.207106781186547*x[18]+1.82842712474619*x[17]),
+    abs(-x[23]+2*x[18]-x[13]),
+    abs(-0.5*x[25]-0.5*x[13]-0.207106781186547*x[20]-0.207106781186547*x[24]-0.207106781186547*x[14]-0.207106781186547*x[18]+1.82842712474619*x[19]),
+    abs(-x[15]+2*x[14]-x[13]),
+    abs(-0.5*x[5]-0.5*x[13]-0.207106781186547*x[4]-0.207106781186547*x[10]-0.207106781186547*x[8]-0.207106781186547*x[14]+1.82842712474619*x[9]),
+    abs(-x[3]+2*x[8]-x[13]),
+    #You could define a function using only the following 4 directional differences
+    abs(-0.5*x[7]-0.5*x[19]-0.207106781186547*x[8]-0.207106781186547*x[12]-0.207106781186547*x[14]-0.207106781186547*x[18]+1.82842712474619*x[13]),
+    abs(-x[12]+2*x[13]-x[14]),
+    abs(-0.5*x[17]-0.5*x[9]-0.207106781186547*x[8]-0.207106781186547*x[12]-0.207106781186547*x[14]-0.207106781186547*x[18]+1.82842712474619*x[13]),
+    abs(-x[8]+2*x[13]-x[18])
+  ))
+}
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
+#' @export
+#' @rdname RRIMax
+RRIMax.SpatRaster <- function(x, ..., .method = c("r", "rcpp")) {
+  .method <- match.arg(.method)
+
+  if (identical(.method, "rcpp")) {
+    focalCpp(x, w = 5, fun = RRIMax_cpp)
+  } else {
+    focal(x, w = 5, fun = RRIMax.numeric)
+  }
+}
+
 
 #End Update March 2025
 
