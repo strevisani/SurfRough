@@ -846,9 +846,6 @@ RRIK3.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
 #'
 #' Same as RRI but instead of computing the mean of the absolute differences of order 2,
 #' the minimum is computed.
-#' This can be more meaningful for ecological processes (i.e., what matters could be
-#' the lowest roughness found along the directions considered)
-#' Comparing this with RRImax you can get a proxy of anisotropy.
 #' The input is the DEM (no need to detrend).
 #'
 #' @references
@@ -892,7 +889,7 @@ RRIMin.numeric <- function(x, ...) {
 #' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
 #' @export
 #' @rdname RRIMin
-RRIMin.SpatRaster <- function(x, ..., .method = c("r", "rcpp")) {
+RRIMin.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
   .method <- match.arg(.method)
 
   if (identical(.method, "rcpp")) {
@@ -902,11 +899,10 @@ RRIMin.SpatRaster <- function(x, ..., .method = c("r", "rcpp")) {
   }
 }
 
-#' RRIMax: Maximum Radial Roughness index
+#' RRIMax: Maximum Radial Roughness index 
 #'
 #' Same as RRI but instead of computing the mean of the absolute differences of order 2,
 #' the maximum is computed.
-#' Comparing this with RRImin you can get a proxy of anisotropy.
 #' The input is the DEM (no need to detrend).
 #'
 #' @references
@@ -950,7 +946,7 @@ RRIMax.numeric <- function(x, ...) {
 #' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
 #' @export
 #' @rdname RRIMax
-RRIMax.SpatRaster <- function(x, ..., .method = c("r", "rcpp")) {
+RRIMax.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
   .method <- match.arg(.method)
 
   if (identical(.method, "rcpp")) {

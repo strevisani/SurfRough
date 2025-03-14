@@ -10,7 +10,7 @@ RRIMin(x, ...)
 
 \method{RRIMin}{numeric}(x, ...)
 
-\method{RRIMin}{SpatRaster}(x, ..., .method = c("r", "rcpp"))
+\method{RRIMin}{SpatRaster}(x, ..., .method = c("rcpp", "r"))
 }
 \arguments{
 \item{x}{A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
