@@ -2,7 +2,7 @@
 % Please edit documentation in R/GeostTextureLibrarySharedRoxy.R
 \name{Trik2.SpatRaster}
 \alias{Trik2.SpatRaster}
-\title{Improved TRI (with differences of order 2), reducing/removing slope dependence.}
+\title{Improved TRI (with differences of order 2), reducing/removing slope dependence (for testing purposes).}
 \usage{
 \method{Trik2}{SpatRaster}(x)
 }
@@ -13,7 +13,8 @@
 isotropic roughness (in the same units of input)
 }
 \description{
-It is essentially a radial roughness index.
+It is essentially a radial roughness index.This has been created for explaining the derivation of RRI, and it is not
+supposed to be used for doing real analysis.
 TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
 so as to reduce/remove the effect of local slope.
 This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
@@ -40,6 +41,6 @@ Intermountain Journal of Science 5:23.
 Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 \item Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-https://doi.org/10.1016/j.geomorph.2023.108838
+\url{https://doi.org/10.1016/j.geomorph.2023.108838}
 }
 }

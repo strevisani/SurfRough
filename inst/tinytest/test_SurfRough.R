@@ -137,6 +137,7 @@ expect_equal(a, 9)
 # end test kernels of order 2
 
 
+
 #Test less robust geostatistical indexes
 #####test
 #rm(list=ls())
@@ -178,9 +179,26 @@ expect_equal(a, 6)
 #test trik and trick roughness indexes
 a=0
 w<- matrix(c(1:25), nrow=5, ncol=5)
-if(Trik2(w)<1e-5) a=a+1
-if(RRI(w)<1e-5) a=a+1
+if(abs(Trik2(w))<1e-5) a=a+1
+if(abs(RRI(w))<1e-5) a=a+1
 expect_equal(a, 2)
 rm(list=ls())
-
+#new tests 2025
+a=0
+#1. test new DDs of order four,this should be near 0
+if(abs(sum(k1ck4[[1]])+sum(k1ck4[[2]])+sum(k1ck4[[3]])+sum(k1ck4[[4]]))<1e-5) a=a+1
+#2. test TRIbi
+w<- matrix(c(c(1,1,1),c(2,2,2),c(3,3,3)), nrow=3, ncol=3)
+#should be like (0+0+1+1+4*1/sqrt(2))/8
+if(abs(TRIbi(w)-(0+0+1+1+4*1/sqrt(2))/8)<1e-5) a=a+1
+rm(w)
+#3. test for RRIcore, should be 0
+w<- matrix(c(1:25), nrow=5, ncol=5)
+if(abs(RRIcore(w))<1e-5) a=a+1
+rm(w)
+#4. test for RRIk4, shoould be 0
+w<- matrix(c(1:25), nrow=5, ncol=5)
+if(abs(RRIk4(w))<1e-5) a=a+1
+expect_equal(a, 4)
+rm(list=ls())
 

@@ -18,5 +18,5 @@ A raster with the mean of absolute values in the search window
 }
 \description{
 With this you can compute variogram and madogram (but remember that for
-classical geostatistical indexes you need to divide the derived isotropic index by 2!)
+conventional geostatistical indices you need to divide the derived isotropic index by 2!)
 }

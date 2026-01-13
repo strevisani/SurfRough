@@ -39,6 +39,9 @@ k05ck2
 k1ck2
 #lag 2 pixels
 k2ck2
+#kernels of order 4,for filtering curvature
+#these can be applied directly without detrending
+k1ck4
 }
 \references{
 \enumerate{

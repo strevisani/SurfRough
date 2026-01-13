@@ -13,25 +13,25 @@ RRI(x, ...)
 \method{RRI}{SpatRaster}(x, ..., .method = c("rcpp", "r"))
 }
 \arguments{
-\item{x}{A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
+\item{x}{A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
 
 \item{...}{reserved for future use}
 
 \item{.method}{Either \code{r} or \code{rcpp} (fast batch processing using C++)}
 }
 \value{
-isotropic roughness (in the same units of input)
+RRI (in the same units of input)
 }
 \description{
 Modified TRI, based on increments of order 2  (reducing/removing slope dependence) and correcting for diagonal distance.
 RRI modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to the central pixel,
 so as to reduce/remove the effect of local slope.
 This version corrects for the diagonal distance using bilinear interpolation.
-It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
+It uses a 5x5 kernel, consequently 12 directional differences of order k=2
 are used in the estimation.
 One could also use a 3x3 kernel using only the 4 differences centered on the central pixel
-but the metric would be very noisy.
-The input is the DEM (no need to detrend).
+but the metric would be very noisy (see RRIcore()).
+The input is the DEM/image (no need to detrend).
 }
 \examples{
 library(terra)
@@ -50,6 +50,6 @@ Intermountain Journal of Science 5:23.
 Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 \item Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-https://doi.org/10.1016/j.geomorph.2023.108838
+\url{https://doi.org/10.1016/j.geomorph.2023.108838}
 }
 }

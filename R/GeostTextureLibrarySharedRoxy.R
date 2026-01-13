@@ -1,3 +1,19 @@
+###Update January 2025
+#Added new functions and kernels, with rcpp implementations.
+#TRIbi: like TRI but using bilinear interpolation along diagonals
+#RRIcore: using only the inner four second order directional differences (i.e., inner part of RRI kernel)
+#RRIk4: RRI with fourth order directional differences (filtering smooth curvature)
+#k1ck4: kernels lag 1 pixel and fourth order differences (for filtering curvature) to be used
+#with geostatistical estimators (Madscan and Meanscan).
+#For computing roughness indices that are based on measures of dispersion of local
+#surface parameters (e.g., slope, profile curvature, residual surface, etc.)
+#two fast functions have been implemented (using terra focalcpp function)
+#fast cpp version of IQR for computing focal statistics (method type 7)
+#fast cpp version of std for computing focal statistics (population variance, divided by n)
+#For references see:
+#Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
+#Remote Sensing 17. https://doi.org/10.3390/rs17233864
+
 ###Update February 2025
 #Added cpp version of RRI, approximately 20 times faster than the original version
 #After this, other implementations will follow...
@@ -5,7 +21,7 @@
 #news
 #1) Trik2 and RRI functions
 #2) Madscan and Meanscan functions return the 3 layers raster with the names of the
-# roughness indexes (names(result)=c("IsoRough","AnisoDir","AnisoR"))
+# roughness indices (names(result)=c("IsoRough","AnisoDir","AnisoR"))
 #
 ###Date 1 September 2022 Venice###
 #
@@ -39,9 +55,9 @@
 ##End of License
 #
 ##Main functions implementing geostatistical-based
-#surface/image texture indexes,using Terra package.
+#surface/image texture indices,using Terra package.
 #With these functions you can
-#compute classical geostatistical indexes
+#compute conventional geostatistical indices
 #(e.g., variogram and madogram) as well as the robust
 #version MAD based on the median of absolute directional differences.
 #
@@ -57,7 +73,7 @@
 #computing directional differences of order 2, permitting to calculate the new MADk2 based metrics,
 #which do not require detrending.
 #However, consider that in the development of ad-hoc kernels,
-#not necessarily limited to bivariate indexes, there is a lot
+#not necessarily limited to bivariate indices, there is a lot
 #of potential for detecting interesting aspects of surface/image texture.
 #Other potential relies in the various approaches for the decomposition of
 #trend and residuals, and in multiscale smoothing approaches.
@@ -195,7 +211,7 @@ anisoDir=function(N,NE,E,SE){
   #using a circular statistics approach and using four directions
   #along N, NE, E and SE (in this precise order!).
   #Returns a raster.
-  #So the input is MAD (or other spatial variability indexes)
+  #So the input is MAD (or other spatial variability indices)
   #calculated in the four directions
   180-(57.2957*0.5*atan2((NE-SE),(E-N)))
   #If you need more directions you should define a new function
@@ -255,23 +271,23 @@ anisoRL=function(x){
   lapp(x, anisoR)
 }
 
-#' Calculate MAD basic indexes
+#' Calculate MAD basic indices
 #'
-#' Calculate MAD basic indexes considering a specif lag and difference of order K.
-#' It computes 3 indexes of roughness/image texture: isotropic/omnidirectional; direction of maximum continuity; anisotropy index.
+#' Calculate MAD basic indices considering a specif lag and difference of order K.
+#' It computes 3 indices of roughness/image texture: isotropic/omnidirectional; direction of maximum continuity; anisotropy index.
 #' The anisotropy index is based on vector dispersion approach: 0 minimum anisotropy; 1 maximum anisotropy.
 #' The direction of anisotropy is in degrees according to geographical convention.
 #'
 #'@references
 #' 1) Trevisani, S. & Rocca, M. 2015. MAD: Robust image texture analysis for applications in high resolution geomorphometry.
-#' Computers and Geosciences, vol. 81, pp. 78-92.
+#' Computers and Geosciences, vol. 81, pp. 78-92.<https://doi.org/10.1016/j.cageo.2015.04.003>
 #'
 #' 2) Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
-#' CATENA,Volume 223, ISSN 0341-8162,https://doi.org/10.1016/j.catena.2023.106927
+#' CATENA,Volume 223, ISSN 0341-8162,<https://doi.org/10.1016/j.catena.2023.106927>
 #'
 #'
-#' @param inRaster The DEM/residual-dem from which to compute the indexes
-#' @param kernels The kernels to be used for computing the directional differences (e.g. order 1 or 2 for various lags)
+#' @param inRaster The DEM/residual-dem/image from which to compute the indices
+#' @param kernels The kernels to be used for computing the directional differences (e.g. order 1,2 and 4 for various lags)
 #' @param w The moving window adopted for computing the geostatistical index (i.e., MAD)
 #'
 #' @return A list of 3 rasters: 1)isotropic roughness; 2) direction of anisotropy;3)index of anisotropy.
@@ -293,7 +309,7 @@ anisoRL=function(x){
 #' plot(rough2c$AnisoR)
 #'
 Madscan<-function(inRaster,kernels,w){
-  #Calculate MAD basic indexes based on 4 directions in this
+  #Calculate MAD basic indices based on 4 directions in this
   #order N,NE,SE,S.
   #Returns 3 rasters: 1)isotropic roughness; 2) direction of anisotropy;
   #3)index of anisotropy.
@@ -326,11 +342,11 @@ Madscan<-function(inRaster,kernels,w){
   result
 }
 
-###Less robust geostatistical indexes###
+###Less robust geostatistical indices###
 #' Calculate the mean of absolute values raised to an exponent found in a search window
 #'
 #' With this you can compute variogram and madogram (but remember that for
-#' classical geostatistical indexes you need to divide the derived isotropic index by 2!)
+#' conventional geostatistical indices you need to divide the derived isotropic index by 2!)
 #
 #' @param deltas The values from which calculate the median of absolute values (i.e., directional differences of order K)
 #' @param w The moving window used (e.g. w=KernelCircular(3))
@@ -343,7 +359,7 @@ CalcMeans=function(deltas,w,exponent){
   #absolute differences elevated at an exponent.
   #Returns a raster.
   #With this you can compute variogram and madogram (but remember that for
-  #classical geostatistical indexes you need to divide by 2!)
+  #conventional geostatistical indices you need to divide by 2!)
   #Deltas-> list with rasters containing directional differences (of any order...)
   #w-> the search window (e.g., w=KernelCircular(3))
   #Exponent->the exponent to consider (e.g., 2 for variogram and 1 for madogram;
@@ -358,12 +374,12 @@ CalcMeans=function(deltas,w,exponent){
   #
 }
 
-#' Calculate less robust geostatistical indexes (mean of absolute differences raised to an exponent)
+#' Calculate less robust geostatistical indices (mean of absolute differences raised to an exponent)
 #'
 #' With this you can compute variogram and madogram (but remember that for
-#' classical geostatistical indexes you need to divide the derived isotropic index by 2!).
+#' conventional geostatistical indices you need to divide the derived isotropic index by 2!).
 #' Moreover you can calibrate the exponent in order to filter or enhance hotspots and discontinuities
-#' @param inRaster The DEM/residual-dem from which to compute the indexes
+#' @param inRaster The DEM/residual-dem/image from which to compute the indices
 #' @param kernels The kernels to be used for computing the directional differences (e.g. order 1 or 2 for various lags)
 #' @param w The moving window adopted for computing the geostatistical index (i.e., MAD)
 #' @param exponent The exponent: increasing the exponent increase the sensitivity to outliers. Set 2 for Variogram and 1 for Madogram.
@@ -380,11 +396,11 @@ CalcMeans=function(deltas,w,exponent){
 #' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 #' w=KernelCircular(3)
 #' rough2c=Meanscan(dem,k2ck2, w,2)
-#' #(divide by two if you need classical estimator)
+#' #(divide by two if you need conventional estimator)
 #' plot(rough2c$IsoRough)
 #'
 Meanscan<-function(inRaster,kernels,w,exponent){
-  #calculate basic indexes based on 4 directions in this
+  #calculate basic indices based on 4 directions in this
   #order N,NE,SE,S
   #if you need more directions you need to generalize
   #the functions for anisotropy.
@@ -415,16 +431,16 @@ Meanscan<-function(inRaster,kernels,w,exponent){
   result
   #
 }
-###End Less robust geostatistical indexes###
+###End Less robust geostatistical indices###
 
 
-###Other roughness indexes###
+###Other roughness indices###
 
-#Here some roughness indexes related to Vector dispersion of normals to surface
+#Here some roughness indices related to Vector dispersion of normals to surface
 
 #' Compute circular variance of aspect (i.e. of the gradient vector)
 #'
-#' @param inraster The DEM from which compute the index
+#' @param inraster The DEM/image from which compute the index
 #' @param window The moving window adopted for computing the index
 #' @import terra
 #' @return The raster with the computed index
@@ -459,7 +475,7 @@ circularDispersionGV=function(inraster,window){
 #' Compute circular variance of normal vectors to surface
 #'
 #'Compute circular variance of normal vectors to surface, using the resultant vector length
-#' @param inraster The DEM from which compute the index
+#' @param inraster The DEM/image from which compute the index
 #' @param window The moving window adopted for computing the index
 #' @import terra
 #' @return The raster with the computed index
@@ -568,9 +584,10 @@ circularEigenNV=function(inraster,window){
 #update 3 March 2023
 
 
-#' Improved TRI (with differences of order 2), reducing/removing slope dependence.
+#' Improved TRI (with differences of order 2), reducing/removing slope dependence (for testing purposes)
 #'
-#' It is essentially a radial roughness index.
+#' It is essentially a radial roughness index.This has been created for explaining the derivation of RRI, and it is not
+#' supposed to be used for doing real analysis.
 #' TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
 #' so as to remove/reduce the effect of local slope.
 #' This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
@@ -589,9 +606,9 @@ circularEigenNV=function(inraster,window){
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' https://doi.org/10.1016/j.geomorph.2023.108838
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
 #'
-#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #'
 #'
 #' @return isotropic roughness (in the same units of input)
@@ -612,9 +629,10 @@ Trik2 <- function(x) {
 }
 
 
-#' Improved TRI (with differences of order 2), reducing/removing slope dependence.
+#' Improved TRI (with differences of order 2), reducing/removing slope dependence (for testing purposes)
 #'
-#' It is essentially a radial roughness index.
+#' It is essentially a radial roughness index.This has been created for explaining the derivation of RRI, and it is not
+#' supposed to be used for doing real analysis.
 #' TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
 #' so as to remove the effect of local slope.
 #' This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
@@ -633,7 +651,7 @@ Trik2 <- function(x) {
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' https://doi.org/10.1016/j.geomorph.2023.108838
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
 #'
 #' @param x A vector of numeric values from a focal window in a DEM from which to compute the index
 #'
@@ -667,9 +685,10 @@ Trik2.numeric=function(x){
   )/12
 }
 
-#' Improved TRI (with differences of order 2), reducing/removing slope dependence.
+#' Improved TRI (with differences of order 2), reducing/removing slope dependence (for testing purposes).
 #'
-#' It is essentially a radial roughness index.
+#' It is essentially a radial roughness index.This has been created for explaining the derivation of RRI, and it is not
+#' supposed to be used for doing real analysis.
 #' TRIk2 modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to central pixel,
 #' so as to reduce/remove the effect of local slope.
 #' This version does not correct for diagonal distance and therefore is mainly for testing/simulation purposes,
@@ -688,7 +707,7 @@ Trik2.numeric=function(x){
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' https://doi.org/10.1016/j.geomorph.2023.108838
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
 #'
 #' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #'
@@ -713,11 +732,11 @@ Trik2.SpatRaster=function(x){
 #' RRI modifies TRI (topographic ruggedness index) using increments of order 2, symmetrical to the central pixel,
 #' so as to reduce/remove the effect of local slope.
 #' This version corrects for the diagonal distance using bilinear interpolation.
-#' It uses a 5x5 kernel, consequently 12 directional differences of order k (2)
+#' It uses a 5x5 kernel, consequently 12 directional differences of order k=2
 #' are used in the estimation.
 #' One could also use a 3x3 kernel using only the 4 differences centered on the central pixel
-#' but the metric would be very noisy.
-#' The input is the DEM (no need to detrend).
+#' but the metric would be very noisy (see RRIcore()).
+#' The input is the DEM/image (no need to detrend).
 #'
 #' @references
 #'
@@ -728,11 +747,11 @@ Trik2.SpatRaster=function(x){
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' https://doi.org/10.1016/j.geomorph.2023.108838
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
 #'
-#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
-#' @return isotropic roughness (in the same units of input)
+#' @return RRI (in the same units of input)
 #' @export
 #' @examples
 #' library(terra)
@@ -782,17 +801,17 @@ RRI.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
 #Update March 2025
 #' RRIK3: Radial Roughness index with differences of order 3
 #'
-#' Extension of RRI using differences of order 3
+#' Extension of RRI using differences of order 3, with a 5x5 kernel.
 #' Accordingly, this version filters out a trend of order 2, so it reduces still more the dependence
-#' on slope and partially on curvature.
-#' The input is the DEM (no need to detrend).
+#' on slope and partially on curvature (for filtering of curvature better to select RRIk4()).
+#' The input is the DEM/image (no need to detrend).
 #'
 #' @references
 #'
 #' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' https://doi.org/10.1016/j.geomorph.2023.108838
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
 #'
-#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
 #' @return isotropic roughness (in the same units of input)
 #' @export
@@ -846,14 +865,14 @@ RRIK3.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
 #'
 #' Same as RRI but instead of computing the mean of the absolute differences of order 2,
 #' the minimum is computed.
-#' The input is the DEM (no need to detrend).
+#' The input is the DEM/image (no need to detrend).
 #'
 #' @references
 #'
 #' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' https://doi.org/10.1016/j.geomorph.2023.108838
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
 #'
-#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
 #' @return isotropic roughness (in the same units of input)
 #' @export
@@ -886,7 +905,7 @@ RRIMin.numeric <- function(x, ...) {
     abs(-x[8]+2*x[13]-x[18])
   ))
 }
-#' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++)
 #' @export
 #' @rdname RRIMin
 RRIMin.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
@@ -903,14 +922,14 @@ RRIMin.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
 #'
 #' Same as RRI but instead of computing the mean of the absolute differences of order 2,
 #' the maximum is computed.
-#' The input is the DEM (no need to detrend).
+#' The input is the DEM/image (no need to detrend).
 #'
 #' @references
 #'
 #'Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' https://doi.org/10.1016/j.geomorph.2023.108838
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
 #'
-#' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
 #' @return isotropic roughness (in the same units of input)
 #' @export
@@ -943,7 +962,7 @@ RRIMax.numeric <- function(x, ...) {
     abs(-x[8]+2*x[13]-x[18])
   ))
 }
-#' @param .method Either `r` or `rcpp` (fast batch processing using C++, still to implement)
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++)
 #' @export
 #' @rdname RRIMax
 RRIMax.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
@@ -959,8 +978,242 @@ RRIMax.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
 
 #End Update March 2025
 
+#Update January 2026
+#Here more functions concerning RRI including RRIk4 and RRIcore
+#In addition fast functions for computing IQR and standard deviation
+#Take care of the different index ordering of kernels in R base, terra and rcpp
+#
+#R        Terra   Rccp
+#1 4 7    1 2 3   0 1 2
+#2 5 8    4 5 6   3 4 5
+#3 6 9    7 8 9   6 7 8
 
-###End other roughness indexes###
+
+#' TRIbi: TRI with bilinear interpolation along diagonals
+#'
+#'TRI is based on DDs of first order (at least in its original definition),
+#'however, it does not take into account the different distances between the pixels
+#'on the diagonals with respect to the cardinal ones.
+#'This version corrects with bilinear interpolation to get the right distance. As TRI, it is a proxy of slope!
+#'
+#'
+#' @references
+#'
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#'
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param ... reserved for future use
+#' @return TRI (in the same units of input)
+#' @export
+#' @examples
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' roughTRIbi=TRIbi(dem)
+#' plot(roughTRIbi)#proxy of slope!
+
+TRIbi <- function(x, ...) {
+  UseMethod("TRIbi")
+}
+
+#' @export
+#' @rdname TRIbi
+TRIbi.numeric<-function(x,...){
+  (
+    abs(x[5]-x[2])+
+      abs(x[5]-(0.207106781186547*x[2]+0.5*x[3]+0.085786437626905*x[5]+0.207106781186547*x[6]))+
+      abs(x[5]-x[6])+
+      abs(x[5]-(0.085786437626905*x[5]+0.207106781186547*x[6]+0.207106781186548*x[8]+0.5*x[9]))+
+      abs(x[5]-x[8])+
+      abs(x[5]-(0.207106781186548*x[4]+0.0857864376269049*x[5]+0.5*x[7]+0.207106781186547*x[8]))+
+      abs(x[5]-x[4])+
+      abs(x[5]-(0.5*x[1]+0.207106781186548*x[2]+0.207106781186547*x[4]+0.085786437626905*x[5]))
+  )/8
+}
+
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++)
+#' @export
+#' @rdname TRIbi
+TRIbi.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
+  .method <- match.arg(.method)
+  
+  if (identical(.method, "rcpp")) {
+    focalCpp(x, w = 3, fun = TRIbi_cpp)
+  } else {
+    focal(x, w = 3, fun = TRIbi.numeric)
+  }
+}
+
+#The RRIcore works with a 3x3 kernel
+#considering only the inner 4 second order directional differences of RRI kernel
+
+#'RRIcore: RRI using only the four inner second order directional differences of the RRI kernel
+#'
+#'RRIcore is like RRI, but it just uses the four inner second order directional differences, using a
+#'3x3 kernel. There are some analogies with Casorati curvature.
+#'The input is the DEM/image (no need to detrend).
+#'
+#' @references
+#'
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#'
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param ... reserved for future use
+#' @return RRIcore (in the same units of input)
+#' @export
+#' @examples
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' roughRRIcore=RRIcore(dem)
+#' plot(roughRRIcore)
+
+RRIcore<- function(x, ...) {
+  UseMethod("RRIcore")
+}
+
+#' @export
+#' @rdname RRIcore
+RRIcore.numeric<- function(x, ...) {#You could define a function using only the following 4 directional differences
+  (abs(-0.5*x[1]-0.5*x[9]-0.207106781186547*x[2]-0.207106781186547*x[4]-0.207106781186547*x[6]-0.207106781186547*x[8]+1.82842712474619*x[5])+
+     abs(-x[4]+2*x[5]-x[6])+
+     abs(-0.5*x[7]-0.5*x[3]-0.207106781186547*x[2]-0.207106781186547*x[4]-0.207106781186547*x[6]-0.207106781186547*x[8]+1.82842712474619*x[5])+
+     abs(-x[2]+2*x[5]-x[8]))/4
+}
+
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++)
+#' @export
+#' @rdname RRIcore
+RRIcore.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
+  .method <- match.arg(.method)
+  
+  if (identical(.method, "rcpp")) {
+    focalCpp(x, w = 3, fun = RRIcore_cpp)
+  } else {
+    focal(x, w = 3, fun = RRIcore.numeric)
+  }
+}
+
+#' RRIk4: Radial Roughness index with fourth order differences
+#'
+#' RRI based on increments of order 4, permits the filtering of curvature (filters a polynomial of order 3),
+#' always using a 5x5 kernel.
+#' The input is the DEM/image (no need to detrend).
+#'
+#' @references
+#'
+#' 1) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
+#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' 2) Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
+#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#'
+#' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
+#' @param ... reserved for future use
+#' @return RRIk4 (in the same units of input)
+#' @export
+#' @examples
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' roughRRIk4=RRIk4(dem)
+#' plot(roughRRIk4)
+
+RRIk4<- function(x, ...) {
+  UseMethod("RRIk4")
+}
+
+#' @export
+#' @rdname RRIk4
+#RRI with DDs odf order four (using terra indexing)
+RRIk4.numeric<-function(x, ...){
+  (
+    abs(-x[23]+4*x[18]-6*x[13]+4*x[8]-x[3])+
+      abs(-(0.242640687119285*x[16]+0.34314575050762*x[17]+0.17157287525381*x[21]+0.242640687119285*x[22])
+          +4*(0.207106781186548*x[12]+0.0857864376269049*x[13]+0.5*x[17]+0.207106781186547*x[18])
+          -6*x[13]+4*(0.207106781186547*x[8]+0.5*x[9]+0.085786437626905*x[13]+0.207106781186547*x[14])
+          -(0.242640687119285*x[4]+0.17157287525381*x[5]+0.34314575050762*x[9]+0.242640687119285*x[10])
+      )+
+      abs(-x[11]+4*x[12]-6*x[13]+4*x[14]-x[15])+
+      abs(-(0.17157287525381*x[1]+0.242640687119285*x[2]+0.242640687119285*x[6]+0.34314575050762*x[7])
+          +4*(0.5*x[7]+0.207106781186548*x[8]+0.207106781186547*x[12]+0.085786437626905*x[13])
+          -6*x[13]+4*(0.085786437626905*x[13]+0.207106781186547*x[14]+0.207106781186548*x[18]+0.5*x[19])
+          -(0.34314575050762*x[19]+0.242640687119285*x[20]+0.242640687119285*x[24]+0.17157287525381*x[25]))
+  )/4
+}
+
+#' @param .method Either `r` or `rcpp` (fast batch processing using C++)
+#' @export
+#' @rdname RRIk4
+RRIk4.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
+  .method <- match.arg(.method)
+  
+  if (identical(.method, "rcpp")) {
+    focalCpp(x, w = 5, fun = RRIk4_cpp)
+  } else {
+    focal(x, w = 5, fun = RRIk4.numeric)
+  }
+}
+
+
+#' stdST: standard deviation in a moving window
+#' 
+#' A function to compute standard deviation in a moving window. By default it uses
+#' the implemented rcpp version that is many times faster that using focal with var() base
+#' R function. It provides the same result as ArcGis Pro. It is intended for computing roughness
+#' indices expressed as dispersion of local surface parameters (e.g., slope, profile curvature, residual surface, etc.).
+#' Whenever there is a NA in the kernel the result is NA.
+#' R base var() function uses n-1 at the denominator, here we use n.
+#' @references Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
+#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#' @param x A DEM/image as a SpatRaster
+#' @param w Search window (e.g., kernelCircular(3)), default 5x5 window
+#' @param ... for further use
+#' @return the STD of the selected property in the search window (same units of the input)
+#' @export
+#' @rdname stdST
+#' @examples
+#' library(terra)
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' # std of slope in degrees
+#' slope=terrain(dem, v="slope")
+#' w=KernelCircular(3)
+#' w
+#' stdSlope=stdST(slope,w=w)
+#' plot(stdSlope)
+
+stdST<- function(x,w=5, ...) {
+    focalCpp(x, w, fun = std_cpp)
+}
+
+#' iqrST: interquartile range in a moving window
+#' 
+#' A function to compute IQR with r method type 7 in a search window. It uses
+#' the implemented rcpp version that is many times faster that using focal with IQR() base
+#' R function. It provides the same result as ArcGis Pro.It is intended for computing roughness
+#' indices expressed as a robust (differently from standard deviation) estimate of dispersion
+#' of local surface parameters (e.g., slope, profile curvature, residual surface, etc.).
+#' 
+#' @references Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
+#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#' @param x A DEM/image as a SpatRaster
+#' @param w Search window (e.g., kernelCircular(3)), default 5x5 window
+#' @param ... for further use
+#' @return the IQR of the selected property in the search window (same units of the input)
+#' @export
+#' @rdname iqrST
+#' @examples
+#' dem= rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' # iqr of slope in degrees
+#' slope=terrain(dem, v="slope")
+#' w=KernelCircular(3)
+#' w
+#' iqrSlope=iqrST(slope,w=w)
+#' plot(iqrSlope)
+
+iqrST<- function(x,w=5, ...) {
+    focalCpp(x, w, fun = iqr_cpp)
+}
+
+###End other roughness indices###
 
 
 ######End Surface texture functions######

@@ -17,3 +17,23 @@ RRIMax_cpp <- function(x, ni, nw) {
     .Call(`_SurfRough_RRIMax_cpp`, x, ni, nw)
 }
 
+TRIbi_cpp <- function(x, ni, nw) {
+    .Call(`_SurfRough_TRIbi_cpp`, x, ni, nw)
+}
+
+RRIcore_cpp <- function(x, ni, nw) {
+    .Call(`_SurfRough_RRIcore_cpp`, x, ni, nw)
+}
+
+RRIk4_cpp <- function(x, ni, nw) {
+    .Call(`_SurfRough_RRIk4_cpp`, x, ni, nw)
+}
+
+std_cpp <- function(x, ni, nw) {
+    .Call(`_SurfRough_std_cpp`, x, ni, nw)
+}
+
+iqr_cpp <- function(x, ni, nw) {
+    .Call(`_SurfRough_iqr_cpp`, x, ni, nw)
+}
+

@@ -13,11 +13,11 @@ RRIMax(x, ...)
 \method{RRIMax}{SpatRaster}(x, ..., .method = c("rcpp", "r"))
 }
 \arguments{
-\item{x}{A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
+\item{x}{A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
 
 \item{...}{reserved for future use}
 
-\item{.method}{Either \code{r} or \code{rcpp} (fast batch processing using C++, still to implement)}
+\item{.method}{Either \code{r} or \code{rcpp} (fast batch processing using C++)}
 }
 \value{
 isotropic roughness (in the same units of input)
@@ -25,8 +25,7 @@ isotropic roughness (in the same units of input)
 \description{
 Same as RRI but instead of computing the mean of the absolute differences of order 2,
 the maximum is computed.
-Comparing this with RRImin you can get a proxy of anisotropy.
-The input is the DEM (no need to detrend).
+The input is the DEM/image (no need to detrend).
 }
 \examples{
 library(terra)
@@ -36,5 +35,5 @@ plot(roughRRIMax)
 }
 \references{
 Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-https://doi.org/10.1016/j.geomorph.2023.108838
+\url{https://doi.org/10.1016/j.geomorph.2023.108838}
 }

@@ -13,7 +13,7 @@ RRIK3(x, ...)
 \method{RRIK3}{SpatRaster}(x, ..., .method = c("rcpp", "r"))
 }
 \arguments{
-\item{x}{A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
+\item{x}{A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index}
 
 \item{...}{reserved for future use}
 
@@ -23,10 +23,10 @@ RRIK3(x, ...)
 isotropic roughness (in the same units of input)
 }
 \description{
-Extension of RRI using differences of order 3
+Extension of RRI using differences of order 3, with a 5x5 kernel.
 Accordingly, this version filters out a trend of order 2, so it reduces still more the dependence
-on slope and partially on curvature.
-The input is the DEM (no need to detrend).
+on slope and partially on curvature (for filtering of curvature better to select RRIk4()).
+The input is the DEM/image (no need to detrend).
 }
 \examples{
 library(terra)
@@ -36,5 +36,5 @@ plot(roughRRIK3)
 }
 \references{
 Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-https://doi.org/10.1016/j.geomorph.2023.108838
+\url{https://doi.org/10.1016/j.geomorph.2023.108838}
 }

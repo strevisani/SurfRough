@@ -7,7 +7,7 @@
 circularDispersionGV(inraster, window)
 }
 \arguments{
-\item{inraster}{The DEM from which compute the index}
+\item{inraster}{The DEM/image from which compute the index}
 
 \item{window}{The moving window adopted for computing the index}
 }

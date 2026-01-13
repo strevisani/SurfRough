@@ -2,14 +2,14 @@
 % Please edit documentation in R/GeostTextureLibrarySharedRoxy.R
 \name{Madscan}
 \alias{Madscan}
-\title{Calculate MAD basic indexes}
+\title{Calculate MAD basic indices}
 \usage{
 Madscan(inRaster, kernels, w)
 }
 \arguments{
-\item{inRaster}{The DEM/residual-dem from which to compute the indexes}
+\item{inRaster}{The DEM/residual-dem/image from which to compute the indices}
 
-\item{kernels}{The kernels to be used for computing the directional differences (e.g. order 1 or 2 for various lags)}
+\item{kernels}{The kernels to be used for computing the directional differences (e.g. order 1,2 and 4 for various lags)}
 
 \item{w}{The moving window adopted for computing the geostatistical index (i.e., MAD)}
 }
@@ -17,8 +17,8 @@ Madscan(inRaster, kernels, w)
 A list of 3 rasters: 1)isotropic roughness; 2) direction of anisotropy;3)index of anisotropy.
 }
 \description{
-Calculate MAD basic indexes considering a specif lag and difference of order K.
-It computes 3 indexes of roughness/image texture: isotropic/omnidirectional; direction of maximum continuity; anisotropy index.
+Calculate MAD basic indices considering a specif lag and difference of order K.
+It computes 3 indices of roughness/image texture: isotropic/omnidirectional; direction of maximum continuity; anisotropy index.
 The anisotropy index is based on vector dispersion approach: 0 minimum anisotropy; 1 maximum anisotropy.
 The direction of anisotropy is in degrees according to geographical convention.
 }
@@ -39,8 +39,8 @@ plot(rough2c$AnisoR)
 \references{
 \enumerate{
 \item Trevisani, S. & Rocca, M. 2015. MAD: Robust image texture analysis for applications in high resolution geomorphometry.
-Computers and Geosciences, vol. 81, pp. 78-92.
+Computers and Geosciences, vol. 81, pp. 78-92.\url{https://doi.org/10.1016/j.cageo.2015.04.003}
 \item Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
-CATENA,Volume 223, ISSN 0341-8162,https://doi.org/10.1016/j.catena.2023.106927
+CATENA,Volume 223, ISSN 0341-8162,\url{https://doi.org/10.1016/j.catena.2023.106927}
 }
 }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/GeostTextureLibrarySharedRoxy.R
 \name{Meanscan}
 \alias{Meanscan}
-\title{Calculate less robust geostatistical indexes (mean of absolute differences raised to an exponent)}
+\title{Calculate less robust geostatistical indices (mean of absolute differences raised to an exponent)}
 \usage{
 Meanscan(inRaster, kernels, w, exponent)
 }
 \arguments{
-\item{inRaster}{The DEM/residual-dem from which to compute the indexes}
+\item{inRaster}{The DEM/residual-dem/image from which to compute the indices}
 
 \item{kernels}{The kernels to be used for computing the directional differences (e.g. order 1 or 2 for various lags)}
 
@@ -20,7 +20,7 @@ A SpatRaster with 3 layers: 1)isotropic roughness; 2) direction of anisotropy; 3
 }
 \description{
 With this you can compute variogram and madogram (but remember that for
-classical geostatistical indexes you need to divide the derived isotropic index by 2!).
+conventional geostatistical indices you need to divide the derived isotropic index by 2!).
 Moreover you can calibrate the exponent in order to filter or enhance hotspots and discontinuities
 }
 \examples{
@@ -31,7 +31,7 @@ library(terra)
 dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
 w=KernelCircular(3)
 rough2c=Meanscan(dem,k2ck2, w,2)
-#(divide by two if you need classical estimator)
+#(divide by two if you need conventional estimator)
 plot(rough2c$IsoRough)
 
 }

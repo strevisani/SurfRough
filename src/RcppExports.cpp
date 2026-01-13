@@ -62,12 +62,82 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// TRIbi_cpp
+NumericVector TRIbi_cpp(NumericVector x, size_t ni, size_t nw);
+RcppExport SEXP _SurfRough_TRIbi_cpp(SEXP xSEXP, SEXP niSEXP, SEXP nwSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< size_t >::type ni(niSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nw(nwSEXP);
+    rcpp_result_gen = Rcpp::wrap(TRIbi_cpp(x, ni, nw));
+    return rcpp_result_gen;
+END_RCPP
+}
+// RRIcore_cpp
+NumericVector RRIcore_cpp(NumericVector x, size_t ni, size_t nw);
+RcppExport SEXP _SurfRough_RRIcore_cpp(SEXP xSEXP, SEXP niSEXP, SEXP nwSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< size_t >::type ni(niSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nw(nwSEXP);
+    rcpp_result_gen = Rcpp::wrap(RRIcore_cpp(x, ni, nw));
+    return rcpp_result_gen;
+END_RCPP
+}
+// RRIk4_cpp
+NumericVector RRIk4_cpp(NumericVector x, size_t ni, size_t nw);
+RcppExport SEXP _SurfRough_RRIk4_cpp(SEXP xSEXP, SEXP niSEXP, SEXP nwSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< size_t >::type ni(niSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nw(nwSEXP);
+    rcpp_result_gen = Rcpp::wrap(RRIk4_cpp(x, ni, nw));
+    return rcpp_result_gen;
+END_RCPP
+}
+// std_cpp
+NumericVector std_cpp(NumericVector x, size_t ni, size_t nw);
+RcppExport SEXP _SurfRough_std_cpp(SEXP xSEXP, SEXP niSEXP, SEXP nwSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< size_t >::type ni(niSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nw(nwSEXP);
+    rcpp_result_gen = Rcpp::wrap(std_cpp(x, ni, nw));
+    return rcpp_result_gen;
+END_RCPP
+}
+// iqr_cpp
+NumericVector iqr_cpp(NumericVector x, size_t ni, size_t nw);
+RcppExport SEXP _SurfRough_iqr_cpp(SEXP xSEXP, SEXP niSEXP, SEXP nwSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< size_t >::type ni(niSEXP);
+    Rcpp::traits::input_parameter< size_t >::type nw(nwSEXP);
+    rcpp_result_gen = Rcpp::wrap(iqr_cpp(x, ni, nw));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SurfRough_RRI_cpp", (DL_FUNC) &_SurfRough_RRI_cpp, 3},
     {"_SurfRough_RRIK3_cpp", (DL_FUNC) &_SurfRough_RRIK3_cpp, 3},
     {"_SurfRough_RRIMin_cpp", (DL_FUNC) &_SurfRough_RRIMin_cpp, 3},
     {"_SurfRough_RRIMax_cpp", (DL_FUNC) &_SurfRough_RRIMax_cpp, 3},
+    {"_SurfRough_TRIbi_cpp", (DL_FUNC) &_SurfRough_TRIbi_cpp, 3},
+    {"_SurfRough_RRIcore_cpp", (DL_FUNC) &_SurfRough_RRIcore_cpp, 3},
+    {"_SurfRough_RRIk4_cpp", (DL_FUNC) &_SurfRough_RRIk4_cpp, 3},
+    {"_SurfRough_std_cpp", (DL_FUNC) &_SurfRough_std_cpp, 3},
+    {"_SurfRough_iqr_cpp", (DL_FUNC) &_SurfRough_iqr_cpp, 3},
     {NULL, NULL, 0}
 };
 
