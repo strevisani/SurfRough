@@ -40,6 +40,14 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
+          
+      # === try to see if THIS STEP resolve the issues for mac
+      - name: Install PROJ (macOS only)
+        if: runner.os == 'macOS'
+        run: |
+          brew install proj
+          echo "PROJ_LIB=$(brew --prefix proj)/share/proj" >> $GITHUB_ENV
+      # ====================
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
