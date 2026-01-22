@@ -5,6 +5,8 @@
 #RRIk4: RRI with fourth order directional differences (filtering smooth curvature)
 #k1ck4: kernels lag 1 pixel and fourth order differences (for filtering curvature) to be used
 #with geostatistical estimators (Madscan and Meanscan).
+#MadScanL: a version of MadScan designed to work with large files, with a little better
+#management of disk space. In future I will work on a cpp version.
 #For computing roughness indices that are based on measures of dispersion of local
 #surface parameters (e.g., slope, profile curvature, residual surface, etc.)
 #two fast functions have been implemented (using terra focalcpp function)
@@ -341,6 +343,101 @@ Madscan<-function(inRaster,kernels,w){
   names(result)=c("IsoRough","AnisoDir","AnisoR")
   result
 }
+
+
+
+################################################################################
+#' Calculate MAD basic indices (version for large files)
+#'
+#' Calculate MAD basic indices considering a specif lag and difference of order K.
+#' It computes 3 indices of roughness/image texture: isotropic/omnidirectional; direction of maximum continuity; anisotropy index.
+#' The anisotropy index is based on vector dispersion approach: 0 minimum anisotropy; 1 maximum anisotropy.
+#' The direction of anisotropy is in degrees according to geographical convention.
+#' This version clean and remove unused files so as to reduce the consumption of disk space.
+#' When non necessary prefer Madscan(). Work is in progress to create a still more memory (ram and disk)
+#' efficient function.
+#' 
+#'@references
+#' 1) Trevisani, S. & Rocca, M. 2015. MAD: Robust image texture analysis for applications in high resolution geomorphometry.
+#' Computers and Geosciences, vol. 81, pp. 78-92.<https://doi.org/10.1016/j.cageo.2015.04.003>
+#'
+#' 2) Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
+#' CATENA,Volume 223, ISSN 0341-8162,<https://doi.org/10.1016/j.catena.2023.106927>
+#'
+#'
+#' @param inRaster The DEM/residual-dem/image from which to compute the indices
+#' @param kernels The kernels to be used for computing the directional differences (e.g. order 1,2 and 4 for various lags)
+#' @param w The moving window adopted for computing the geostatistical index (i.e., MAD)
+#'
+#' @return A list of 3 rasters: 1)isotropic roughness; 2) direction of anisotropy;3)index of anisotropy.
+#' @import terra
+#' @export
+#'
+#'
+#' @examples
+#' # MAD for lag 2 with differences of order 2 using a circular search window of radius 3.
+#' # Using differences of order 1, you should
+#' # apply these on a detrended surface/image.
+#' library(terra)
+#' dem=rast(paste(system.file("extdata", package = "SurfRough"), "/trento1.tif",sep=""))
+#' w=KernelCircular(3)
+#' rough2c=MadscanL(dem,k2ck2, w)
+#' #Plot isotropic roughness
+#' plot(rough2c$IsoRough)
+#' #Plot anisotropy index/strenght
+#' plot(rough2c$AnisoR)
+#'
+MadscanL<-function(inRaster,kernels,w){
+  #Calculate MAD basic indices based on 4 directions in this
+  #order N,NE,SE,S.
+  #Returns 3 rasters: 1)isotropic roughness; 2) direction of anisotropy;
+  #3)index of anisotropy.
+  #If you need more directions you need to generalize
+  #the functions for anisotropy.
+  #With very large files and few space on disk I use a modified version
+  #that works a little differently. But I do not insert it in this public library.
+  #inRaster->input raster, depending from the kernels
+  #it may be a detrended version (i.e., high pass filtered) or directly the DTM/image.
+  #kernels->a list of kernels (e.g.,myKernels=list(N2c,NE2c,E2c,SE2c)).
+  #w->search window (e.g., w=KernelCircular(3)).
+  deltas=list()
+  #instead of a for loop you could use lapply
+  for (i in 1:length(kernels)){
+    deltas[[i]]=focal(inRaster, w=data.matrix(kernels[[i]]), na.rm=FALSE,expand=F)
+  }
+  gc()#update
+  #directional MADs
+  deltas=rast(deltas)
+  dirMad=CalcMedians(deltas,w)
+  gc()#update
+  deltas_files=sources(deltas)
+  rm(deltas)
+  # Clean up temporary files for 'deltas' raster
+  if(length(deltas_files) > 0) {
+    unlink(deltas_files, recursive = TRUE)
+  }
+  #isotropic mad
+  madIso=app(dirMad,fun=mean)
+  gc()#update
+  #direction of maximum continuity
+  anisoDirection=anisoDirL(dirMad)
+  gc()#update
+  #anisotropy computed with circular statistics
+  #standardized resultant length
+  anisoR=anisoRL(dirMad)
+  gc()#update
+  dirMad_files=sources(dirMad)
+  rm(dirMad)
+  # Clean up temporary files for 'deltas' raster
+  if(length(dirMad_files) > 0) {
+    unlink(dirMad_files, recursive = TRUE)
+  }
+  result=c(madIso,anisoDirection,anisoR)
+  gc()#update
+  names(result)=c("IsoRough","AnisoDir","AnisoR")
+  result
+}
+
 
 ###Less robust geostatistical indices###
 #' Calculate the mean of absolute values raised to an exponent found in a search window
