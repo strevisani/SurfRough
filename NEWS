@@ -1,0 +1,18 @@
+# SurfRough 0.0.1.2 (January 2026)
+
+
+## New Features
+* Added new functions and kernels with Rcpp implementations:
+  - `TRIbi`: Like TRI but using bilinear interpolation along diagonals
+  - `RRIcore`: Using only the inner four second order directional differences (i.e., inner part of RRI kernel)
+  - `RRIk4`: RRI with fourth order directional differences (filtering smooth curvature)
+  - `k1ck4`: Kernels lag 1 pixel and fourth order differences (for filtering curvature) to be used with geostatistical estimators (`Madscan` and `Meanscan`)
+* `MadScanL`: A version of Madscan designed to work with large files, with better management of disk space (C++ version planned for future)
+* Added functionality for computing roughness indices based on measures of dispersion of local surface parameters (e.g., slope, profile curvature, residual surface, etc.)
+* Two fast functions using terra's `focalcpp` have been implemented:
+  - `iqrST`: Fast C++ version of IQR for computing focal statistics (method type 7)
+  - `stdST`: Fast C++ version of standard deviation for computing focal statistics (population variance, divided by n)
+* Added reference: Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework. Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+
+## Bug Fixes
+* Corrected help pages
