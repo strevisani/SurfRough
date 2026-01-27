@@ -36,5 +36,5 @@ plot(stdSlope)
 }
 \references{
 Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-Remote Sensing 17. \url{https://doi.org/10.3390/rs17233864}
+Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 }

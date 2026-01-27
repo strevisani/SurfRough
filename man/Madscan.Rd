@@ -39,10 +39,10 @@ plot(rough2c$AnisoR)
 \references{
 \enumerate{
 \item Trevisani, S. & Rocca, M. 2015. MAD: Robust image texture analysis for applications in high resolution geomorphometry.
-Computers and Geosciences, vol. 81, pp. 78-92.\url{https://doi.org/10.1016/j.cageo.2015.04.003}
+Computers and Geosciences, vol. 81, pp. 78-92, \doi{doi:10.1016/j.cageo.2015.04.003}.
 \item Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
-CATENA,Volume 223, ISSN 0341-8162,\url{https://doi.org/10.1016/j.catena.2023.106927}
+CATENA,Volume 223, ISSN 0341-8162,\doi{doi:10.1016/j.catena.2023.106927}.
 \item Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-Remote Sensing 17. \url{https://doi.org/10.3390/rs17233864}
+Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 }
 }

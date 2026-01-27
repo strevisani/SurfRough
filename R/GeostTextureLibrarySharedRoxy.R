@@ -282,13 +282,13 @@ anisoRL=function(x){
 #'
 #'@references
 #' 1) Trevisani, S. & Rocca, M. 2015. MAD: Robust image texture analysis for applications in high resolution geomorphometry.
-#' Computers and Geosciences, vol. 81, pp. 78-92.<https://doi.org/10.1016/j.cageo.2015.04.003>
+#' Computers and Geosciences, vol. 81, pp. 78-92, \doi{doi:10.1016/j.cageo.2015.04.003}.
 #'
 #' 2) Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
-#' CATENA,Volume 223, ISSN 0341-8162,<https://doi.org/10.1016/j.catena.2023.106927>
-#'
+#' CATENA,Volume 223, ISSN 0341-8162,\doi{doi:10.1016/j.catena.2023.106927}.
+#' 
 #' 3) Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#' Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 #'
 #' @param inRaster The DEM/residual-dem/image from which to compute the indices
 #' @param kernels The kernels to be used for computing the directional differences (e.g. order 1,2 and 4 for various lags)
@@ -361,13 +361,13 @@ Madscan<-function(inRaster,kernels,w){
 #' 
 #'@references
 #' 1) Trevisani, S. & Rocca, M. 2015. MAD: Robust image texture analysis for applications in high resolution geomorphometry.
-#' Computers and Geosciences, vol. 81, pp. 78-92.<https://doi.org/10.1016/j.cageo.2015.04.003>
+#' Computers and Geosciences, vol. 81, pp. 78-92, \doi{doi:10.1016/j.cageo.2015.04.003}.
 #'
 #' 2) Trevisani, S. Teza, G., Guth, P., 2023. A simplified geostatistical approach for characterizing key aspects of short-range roughness.
-#' CATENA,Volume 223, ISSN 0341-8162,<https://doi.org/10.1016/j.catena.2023.106927>
+#' CATENA,Volume 223, ISSN 0341-8162,\doi{doi:10.1016/j.catena.2023.106927}.
 #' 
 #' 3) Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#' Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 #'
 #' @param inRaster The DEM/residual-dem/image from which to compute the indices
 #' @param kernels The kernels to be used for computing the directional differences (e.g. order 1,2 and 4 for various lags)
@@ -707,7 +707,7 @@ circularEigenNV=function(inraster,window){
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #'
@@ -752,7 +752,7 @@ Trik2 <- function(x) {
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A vector of numeric values from a focal window in a DEM from which to compute the index
 #'
@@ -808,7 +808,7 @@ Trik2.numeric=function(x){
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #'
@@ -840,15 +840,14 @@ Trik2.SpatRaster=function(x){
 #' The input is the DEM/image (no need to detrend).
 #'
 #' @references
-#'
-#' 1) Riley, S. J., S. D. DeGloria, and R. Elliott. 1999.
+#'#' 1) Riley, S. J., S. D. DeGloria, and R. Elliott. 1999.
 #' A terrain ruggedness index that quantifies topographic heterogeneity.
-#'  Intermountain Journal of Science 5:23.
+#' Intermountain Journal of Science 5:23.
 #' 2) Wilson, M.F.J., O'Connell, B., Brown, C., Guinan, J.C. & Grehan, A.J. 2007.
 #' Multiscale terrain analysis of multibeam bathymetry data for habitat mapping on the continental slope".
 #' Marine Geodesy, vol. 30, no. 1-2, pp. 3-35.
 #' 3) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
@@ -909,8 +908,8 @@ RRI.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
 #'
 #' @references
 #'
-#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
@@ -970,8 +969,8 @@ RRIK3.SpatRaster <- function(x, ..., .method = c("rcpp", "r")) {
 #'
 #' @references
 #'
-#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
@@ -1027,8 +1026,8 @@ RRIMin.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
 #'
 #' @references
 #'
-#'Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
@@ -1100,8 +1099,8 @@ RRIMax.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
 #'
 #' @references
 #'
-#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
@@ -1156,8 +1155,8 @@ TRIbi.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
 #'
 #' @references
 #'
-#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
@@ -1203,10 +1202,10 @@ RRIcore.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
 #'
 #' @references
 #'
-#' 1) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-#' <https://doi.org/10.1016/j.geomorph.2023.108838>
+#' 1) Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+#' \doi{doi:10.1016/j.geomorph.2023.108838}.
 #' 2) Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#' Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 #'
 #' @param x A DEM/image as a SpatRaster or a vector of numeric values from a focal window in a DEM from which to compute the index
 #' @param ... reserved for future use
@@ -1263,8 +1262,9 @@ RRIk4.SpatRaster <- function(x, ..., .method = c("rcpp","r")) {
 #' indices expressed as dispersion of local surface parameters (e.g., slope, profile curvature, residual surface, etc.).
 #' Whenever there is a NA in the kernel the result is NA.
 #' R base var() function uses n-1 at the denominator, here we use n.
-#' @references Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#' @references 
+#' Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
+#' Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 #' @param x A DEM/image as a SpatRaster
 #' @param w Search window (e.g., kernelCircular(3)), default 5x5 window
 #' @param ... for further use
@@ -1293,8 +1293,9 @@ stdST<- function(x,w=5, ...) {
 #' indices expressed as a robust (differently from standard deviation) estimate of dispersion
 #' of local surface parameters (e.g., slope, profile curvature, residual surface, etc.).
 #' 
-#' @references Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-#' Remote Sensing 17. <https://doi.org/10.3390/rs17233864>
+#' @references 
+#' Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
+#' Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 #' @param x A DEM/image as a SpatRaster
 #' @param w Search window (e.g., kernelCircular(3)), default 5x5 window
 #' @param ... for further use

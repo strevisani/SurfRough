@@ -35,9 +35,9 @@ plot(roughRRIk4)
 }
 \references{
 \enumerate{
-\item Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-\url{https://doi.org/10.1016/j.geomorph.2023.108838}
+\item Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+\doi{doi:10.1016/j.geomorph.2023.108838}.
 \item Trevisani, S., Guth, P.L., 2025. Surface Roughness in Geomorphometry: From Basic Metrics Toward a Coherent Framework.
-Remote Sensing 17. \url{https://doi.org/10.3390/rs17233864}
+Remote Sensing 17, \doi{doi:10.3390/rs17233864}.
 }
 }

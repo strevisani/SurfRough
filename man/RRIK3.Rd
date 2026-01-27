@@ -35,6 +35,6 @@ roughRRIK3=RRIK3(dem)
 plot(roughRRIK3)
 }
 \references{
-Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology
-\url{https://doi.org/10.1016/j.geomorph.2023.108838}
+Trevisani S., Teza G., Guth P.L., 2023. Hacking the topographic ruggedness index. Geomorphology,
+\doi{doi:10.1016/j.geomorph.2023.108838}.
 }
